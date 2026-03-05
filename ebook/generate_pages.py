@@ -290,8 +290,25 @@ def generate_xhtml(land_num, scene, land_config, prefix=None):
         <p class="tip-text">"{escape_xml(scene['tip_text'])}"</p>
     </div>"""
 
-    # Illustration description
-    illust_desc = f"A richly detailed scene depicting '{scene['scene_title']}' with numbered callout markers (1–{word_count}) indicating each vocabulary item's location in the scene."
+    # Illustration — check if actual image exists
+    illust_desc = f"A richly detailed scene depicting '{scene['scene_title']}' with numbered callout markers (1\u2013{word_count}) indicating each vocabulary item's location in the scene."
+    base_slug = filename.replace('.xhtml', '')
+    img_file = PAGES_DIR.parent / 'images' / f'{base_slug}.png'
+    if img_file.exists():
+        illust_html = f"""
+    <!-- Scene Illustration -->
+    <div class="scene-illustration">
+        <img src="../images/{base_slug}.png" alt="{escape_xml(illust_desc)}" class="scene-image" />
+    </div>"""
+    else:
+        illust_html = f"""
+    <!-- Illustration Area -->
+    <div class="scene-illustration">
+        <div class="placeholder-text">
+            \U0001F5BC\uFE0F <strong>Illustration: {escape_xml(scene['scene_title'])}</strong><br />
+            {escape_xml(illust_desc)}
+        </div>
+    </div>"""
 
     xhtml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -321,14 +338,7 @@ def generate_xhtml(land_num, scene, land_config, prefix=None):
         <h2 class="scene-title">Scene {scene['scene_number']}: {escape_xml(scene['scene_title'])}</h2>
         <p class="scene-description">{escape_xml(scene['scene_description'])}</p>
     </div>
-
-    <!-- Illustration Area -->
-    <div class="scene-illustration">
-        <div class="placeholder-text">
-            🖼️ <strong>Illustration: {escape_xml(scene['scene_title'])}</strong><br />
-            {escape_xml(illust_desc)}
-        </div>
-    </div>
+{illust_html}
 
     <!-- Vocabulary Table -->
     <table class="vocab-table{' has-asl' if has_asl else ''}">
