@@ -12,6 +12,7 @@
  *   - category:  Grouping within the land
  *   - icon:      Emoji placeholder (swap with <img> for production art)
  *   - audioSrc:  Optional MP3 path (falls back to Web Speech API)
+ *   - aslSrc:    Optional ASL sign image/GIF/video path
  *   - posX/posY: Hotspot position as % of the scene
  * ═══════════════════════════════════════════════════════════════
  */
@@ -35,29 +36,29 @@ export const LANDS = [
         slowMode: false,
         vocabulary: [
             // ── Greetings & Manners ──
-            { id: 'ha-hello', word: 'Hello', category: 'Greetings', icon: '👋', audioSrc: null, posX: 10, posY: 12 },
-            { id: 'ha-goodbye', word: 'Goodbye', category: 'Greetings', icon: '🤗', audioSrc: null, posX: 24, posY: 15 },
-            { id: 'ha-please', word: 'Please', category: 'Manners', icon: '🙏', audioSrc: null, posX: 38, posY: 10 },
-            { id: 'ha-thankyou', word: 'Thank You', category: 'Manners', icon: '💛', audioSrc: null, posX: 52, posY: 14 },
-            { id: 'ha-sorry', word: 'Sorry', category: 'Manners', icon: '😔', audioSrc: null, posX: 66, posY: 10 },
-            { id: 'ha-excuse', word: 'Excuse Me', category: 'Manners', icon: '🙋', audioSrc: null, posX: 80, posY: 16 },
+            { id: 'ha-hello', word: 'Hello', category: 'Greetings', icon: '👋', audioSrc: null, aslSrc: '/assets/asl/hello.png', posX: 10, posY: 12 },
+            { id: 'ha-goodbye', word: 'Goodbye', category: 'Greetings', icon: '🤗', audioSrc: null, aslSrc: null, posX: 24, posY: 15 },
+            { id: 'ha-please', word: 'Please', category: 'Manners', icon: '🙏', audioSrc: null, aslSrc: null, posX: 38, posY: 10 },
+            { id: 'ha-thankyou', word: 'Thank You', category: 'Manners', icon: '💛', audioSrc: null, aslSrc: '/assets/asl/thank-you.png', posX: 52, posY: 14 },
+            { id: 'ha-sorry', word: 'Sorry', category: 'Manners', icon: '😔', audioSrc: null, aslSrc: null, posX: 66, posY: 10 },
+            { id: 'ha-excuse', word: 'Excuse Me', category: 'Manners', icon: '🙋', audioSrc: null, aslSrc: null, posX: 80, posY: 16 },
             // ── Colors ──
-            { id: 'ha-red', word: 'Red', category: 'Colors', icon: '🔴', audioSrc: null, posX: 10, posY: 38 },
-            { id: 'ha-blue', word: 'Blue', category: 'Colors', icon: '🔵', audioSrc: null, posX: 22, posY: 42 },
-            { id: 'ha-green', word: 'Green', category: 'Colors', icon: '🟢', audioSrc: null, posX: 34, posY: 36 },
-            { id: 'ha-yellow', word: 'Yellow', category: 'Colors', icon: '🟡', audioSrc: null, posX: 46, posY: 40 },
-            { id: 'ha-purple', word: 'Purple', category: 'Colors', icon: '🟣', audioSrc: null, posX: 58, posY: 36 },
-            { id: 'ha-orange', word: 'Orange', category: 'Colors', icon: '🟠', audioSrc: null, posX: 70, posY: 42 },
-            { id: 'ha-pink', word: 'Pink', category: 'Colors', icon: '💗', audioSrc: null, posX: 82, posY: 38 },
-            { id: 'ha-white', word: 'White', category: 'Colors', icon: '⚪', audioSrc: null, posX: 92, posY: 42 },
+            { id: 'ha-red', word: 'Red', category: 'Colors', icon: '🔴', audioSrc: null, aslSrc: '/assets/asl/red.png', posX: 10, posY: 38 },
+            { id: 'ha-blue', word: 'Blue', category: 'Colors', icon: '🔵', audioSrc: null, aslSrc: null, posX: 22, posY: 42 },
+            { id: 'ha-green', word: 'Green', category: 'Colors', icon: '🟢', audioSrc: null, aslSrc: null, posX: 34, posY: 36 },
+            { id: 'ha-yellow', word: 'Yellow', category: 'Colors', icon: '🟡', audioSrc: null, aslSrc: null, posX: 46, posY: 40 },
+            { id: 'ha-purple', word: 'Purple', category: 'Colors', icon: '🟣', audioSrc: null, aslSrc: null, posX: 58, posY: 36 },
+            { id: 'ha-orange', word: 'Orange', category: 'Colors', icon: '🟠', audioSrc: null, aslSrc: null, posX: 70, posY: 42 },
+            { id: 'ha-pink', word: 'Pink', category: 'Colors', icon: '💗', audioSrc: null, aslSrc: null, posX: 82, posY: 38 },
+            { id: 'ha-white', word: 'White', category: 'Colors', icon: '⚪', audioSrc: null, aslSrc: null, posX: 92, posY: 42 },
             // ── Family ──
-            { id: 'ha-mother', word: 'Mother', category: 'Family', icon: '👩', audioSrc: null, posX: 12, posY: 65 },
-            { id: 'ha-father', word: 'Father', category: 'Family', icon: '👨', audioSrc: null, posX: 26, posY: 68 },
-            { id: 'ha-sister', word: 'Sister', category: 'Family', icon: '👧', audioSrc: null, posX: 40, posY: 62 },
-            { id: 'ha-brother', word: 'Brother', category: 'Family', icon: '👦', audioSrc: null, posX: 54, posY: 66 },
-            { id: 'ha-baby', word: 'Baby', category: 'Family', icon: '👶', audioSrc: null, posX: 68, posY: 62 },
-            { id: 'ha-grandma', word: 'Grandmother', category: 'Family', icon: '👵', audioSrc: null, posX: 82, posY: 68 },
-            { id: 'ha-grandpa', word: 'Grandfather', category: 'Family', icon: '👴', audioSrc: null, posX: 92, posY: 64 },
+            { id: 'ha-mother', word: 'Mother', category: 'Family', icon: '👩', audioSrc: null, aslSrc: '/assets/asl/mother.png', posX: 12, posY: 65 },
+            { id: 'ha-father', word: 'Father', category: 'Family', icon: '👨', audioSrc: null, aslSrc: '/assets/asl/father.png', posX: 26, posY: 68 },
+            { id: 'ha-sister', word: 'Sister', category: 'Family', icon: '👧', audioSrc: null, aslSrc: null, posX: 40, posY: 62 },
+            { id: 'ha-brother', word: 'Brother', category: 'Family', icon: '👦', audioSrc: null, aslSrc: null, posX: 54, posY: 66 },
+            { id: 'ha-baby', word: 'Baby', category: 'Family', icon: '👶', audioSrc: null, aslSrc: null, posX: 68, posY: 62 },
+            { id: 'ha-grandma', word: 'Grandmother', category: 'Family', icon: '👵', audioSrc: null, aslSrc: null, posX: 82, posY: 68 },
+            { id: 'ha-grandpa', word: 'Grandfather', category: 'Family', icon: '👴', audioSrc: null, aslSrc: null, posX: 92, posY: 64 },
         ],
     },
 
@@ -78,7 +79,7 @@ export const LANDS = [
         slowMode: false,
         vocabulary: [
             // ── Numbers ──
-            { id: 'nu-one', word: 'One', category: 'Numbers', icon: '1️⃣', audioSrc: null, posX: 8, posY: 12 },
+            { id: 'nu-one', word: 'One', category: 'Numbers', icon: '1️⃣', audioSrc: null, aslSrc: '/assets/asl/one.png', posX: 8, posY: 12 },
             { id: 'nu-two', word: 'Two', category: 'Numbers', icon: '2️⃣', audioSrc: null, posX: 18, posY: 15 },
             { id: 'nu-three', word: 'Three', category: 'Numbers', icon: '3️⃣', audioSrc: null, posX: 28, posY: 10 },
             { id: 'nu-four', word: 'Four', category: 'Numbers', icon: '4️⃣', audioSrc: null, posX: 38, posY: 14 },
@@ -128,7 +129,7 @@ export const LANDS = [
             { id: 'vt-cheeks', word: 'Cheeks', category: 'Head & Face', icon: '😊', audioSrc: null, posX: 82, posY: 14 },
             { id: 'vt-ears', word: 'Ears', category: 'Head & Face', icon: '👂', audioSrc: null, posX: 92, posY: 10 },
             // ── Upper Body ──
-            { id: 'vt-neck', word: 'Neck', category: 'Upper Body', icon: '🦒', audioSrc: null, posX: 10, posY: 35 },
+            { id: 'vt-neck', word: 'Neck', category: 'Upper Body', icon: '🦢', audioSrc: null, posX: 10, posY: 35 },
             { id: 'vt-shoulders', word: 'Shoulders', category: 'Upper Body', icon: '🤷', audioSrc: null, posX: 24, posY: 38 },
             { id: 'vt-back', word: 'Back', category: 'Upper Body', icon: '🔙', audioSrc: null, posX: 38, posY: 32 },
             { id: 'vt-arms', word: 'Arms', category: 'Upper Body', icon: '💪', audioSrc: null, posX: 52, posY: 36 },
@@ -141,7 +142,7 @@ export const LANDS = [
             { id: 'vt-legs', word: 'Legs', category: 'Lower Body', icon: '🦶', audioSrc: null, posX: 52, posY: 62 },
             { id: 'vt-ankles', word: 'Ankles', category: 'Lower Body', icon: '⚓', audioSrc: null, posX: 66, posY: 58 },
             { id: 'vt-feet', word: 'Feet', category: 'Lower Body', icon: '👟', audioSrc: null, posX: 80, posY: 64 },
-            { id: 'vt-toes', word: 'Toes', category: 'Lower Body', icon: '🦶', audioSrc: null, posX: 92, posY: 60 },
+            { id: 'vt-toes', word: 'Toes', category: 'Lower Body', icon: '🩴', audioSrc: null, posX: 88, posY: 60 },
         ],
     },
 
@@ -182,19 +183,20 @@ export const LANDS = [
             { id: 'ch-today', word: 'Today', category: 'Time', icon: '📅', audioSrc: null, posX: 82, posY: 64 },
             { id: 'ch-yesterday', word: 'Yesterday', category: 'Time', icon: '⏮️', audioSrc: null, posX: 20, posY: 82 },
             { id: 'ch-tomorrow', word: 'Tomorrow', category: 'Time', icon: '⏭️', audioSrc: null, posX: 50, posY: 85 },
-            // ── Months ──
-            { id: 'ch-january', word: 'January', category: 'Months', icon: '🧊', audioSrc: null, posX: 8, posY: 95 },
-            { id: 'ch-february', word: 'February', category: 'Months', icon: '❤️', audioSrc: null, posX: 18, posY: 95 },
-            { id: 'ch-march', word: 'March', category: 'Months', icon: '🌬️', audioSrc: null, posX: 28, posY: 95 },
-            { id: 'ch-april', word: 'April', category: 'Months', icon: '🌧️', audioSrc: null, posX: 38, posY: 95 },
-            { id: 'ch-may', word: 'May', category: 'Months', icon: '🌷', audioSrc: null, posX: 48, posY: 95 },
-            { id: 'ch-june', word: 'June', category: 'Months', icon: '🌞', audioSrc: null, posX: 58, posY: 95 },
-            { id: 'ch-july', word: 'July', category: 'Months', icon: '🎆', audioSrc: null, posX: 68, posY: 95 },
-            { id: 'ch-august', word: 'August', category: 'Months', icon: '🌻', audioSrc: null, posX: 78, posY: 95 },
-            { id: 'ch-september', word: 'September', category: 'Months', icon: '🍁', audioSrc: null, posX: 88, posY: 95 },
-            { id: 'ch-october', word: 'October', category: 'Months', icon: '🎃', audioSrc: null, posX: 30, posY: 95 },
-            { id: 'ch-november', word: 'November', category: 'Months', icon: '🦃', audioSrc: null, posX: 50, posY: 95 },
-            { id: 'ch-december', word: 'December', category: 'Months', icon: '🎄', audioSrc: null, posX: 70, posY: 95 },
+            // ── Months (Row 1: Jan–Jun) ──
+            { id: 'ch-january', word: 'January', category: 'Months', icon: '🧊', audioSrc: null, posX: 8, posY: 85 },
+            { id: 'ch-february', word: 'February', category: 'Months', icon: '❤️', audioSrc: null, posX: 24, posY: 85 },
+            { id: 'ch-march', word: 'March', category: 'Months', icon: '🌬️', audioSrc: null, posX: 40, posY: 85 },
+            { id: 'ch-april', word: 'April', category: 'Months', icon: '🌧️', audioSrc: null, posX: 56, posY: 85 },
+            { id: 'ch-may', word: 'May', category: 'Months', icon: '🌷', audioSrc: null, posX: 72, posY: 85 },
+            { id: 'ch-june', word: 'June', category: 'Months', icon: '🌞', audioSrc: null, posX: 88, posY: 85 },
+            // ── Months (Row 2: Jul–Dec) ──
+            { id: 'ch-july', word: 'July', category: 'Months', icon: '🎆', audioSrc: null, posX: 8, posY: 95 },
+            { id: 'ch-august', word: 'August', category: 'Months', icon: '🌻', audioSrc: null, posX: 24, posY: 95 },
+            { id: 'ch-september', word: 'September', category: 'Months', icon: '🍁', audioSrc: null, posX: 40, posY: 95 },
+            { id: 'ch-october', word: 'October', category: 'Months', icon: '🎃', audioSrc: null, posX: 56, posY: 95 },
+            { id: 'ch-november', word: 'November', category: 'Months', icon: '🦃', audioSrc: null, posX: 72, posY: 95 },
+            { id: 'ch-december', word: 'December', category: 'Months', icon: '🎄', audioSrc: null, posX: 88, posY: 95 },
         ],
     },
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { assetPath } from '../utils/assetPath';
 
 /* ── Reveal on scroll ── */
 const RevealSection = ({ children, className = '', delay = 0 }) => {
@@ -86,7 +87,7 @@ const CharacterCard = ({ char, index, isExpanded, onToggle }) => {
             >
                 <div className="char-card__image-wrap">
                     <img
-                        src={char.img}
+                        src={assetPath(char.img)}
                         alt={char.name}
                         className="char-card__image"
                         style={{ borderColor: char.landColor }}
@@ -134,10 +135,9 @@ const Characters = () => {
             {/* ── Hero ── */}
             <header className="char-hero">
                 <div className="container text-center">
-                    <div className="animate-fade-up">
-                        <div className="section-label">{t('heroes.hero_label')}</div>
-                        <h1>{t('heroes.hero_title_1')} <span className="text-gold">{t('heroes.hero_title_2')}</span></h1>
-                        <p className="section-subtitle" style={{ margin: '1rem auto' }}>
+                    <div>
+                        <h1 className="hero-stagger" style={{ animationDelay: '0.1s' }}>{t('heroes.hero_title_1')} <span className="accent-gradient">{t('heroes.hero_title_2')}</span></h1>
+                        <p className="section-subtitle hero-stagger" style={{ margin: '1.5rem auto', animationDelay: '0.25s' }}>
                             {t('heroes.hero_subtitle')}
                         </p>
                     </div>
@@ -188,8 +188,9 @@ const Characters = () => {
                         <p className="section-subtitle" style={{ margin: '1rem auto 2rem' }}>
                             {t('heroes.cta_subtitle')}
                         </p>
-                        <div style={{ marginTop: '2rem' }}>
-                            <Link to="/media" className="page-bottom-link">
+                        <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <Link to="/join" className="btn btn-gold">Join the Quest</Link>
+                            <Link to="/media" className="btn btn-outline">
                                 {t('home.explore_media')}
                             </Link>
                         </div>
@@ -200,8 +201,8 @@ const Characters = () => {
             <style>{`
                 .characters-page .reveal-block {
                     opacity: 0;
-                    transform: translateY(25px);
-                    transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
+                    transform: translateY(20px);
+                    transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
                 }
                 .characters-page .reveal-block.revealed {
                     opacity: 1;
@@ -230,7 +231,7 @@ const Characters = () => {
                     font-weight: 500;
                     color: var(--color-text-secondary);
                     cursor: pointer;
-                    transition: all 0.25s ease;
+                    transition: all 0.25s var(--ease-premium);
                 }
 
                 .char-filter-btn:hover {
@@ -256,12 +257,12 @@ const Characters = () => {
                     padding: 0;
                     overflow: hidden;
                     cursor: pointer;
-                    transition: transform 0.35s var(--ease-gentle), box-shadow 0.35s var(--ease-gentle);
+                    transition: transform 0.35s var(--ease-premium), box-shadow 0.35s var(--ease-premium);
                 }
 
                 .char-card:hover {
-                    transform: translateY(-6px);
-                    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+                    transform: translateY(-5px);
+                    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
                 }
 
                 .char-card--featured {
@@ -295,7 +296,7 @@ const Characters = () => {
                     right: 0;
                     width: 55%;
                     height: 30%;
-                    background: linear-gradient(to top left, rgba(255,255,255,0.95) 20%, rgba(255,255,255,0) 70%);
+                    background: linear-gradient(to top left, rgba(26,21,40,0.95) 20%, rgba(26,21,40,0) 70%);
                     pointer-events: none;
                     z-index: 1;
                 }
@@ -305,11 +306,11 @@ const Characters = () => {
                     height: auto;
                     display: block;
                     border-bottom: 4px solid;
-                    transition: transform 0.5s var(--ease-gentle);
+                    transition: transform 0.5s var(--ease-premium);
                 }
 
                 .char-card:hover .char-card__image {
-                    transform: scale(1.06);
+                    transform: scale(1.04);
                 }
 
                 .char-card__land-badge {
@@ -329,7 +330,7 @@ const Characters = () => {
 
                 /* ── Info ── */
                 .char-card__info {
-                    padding: 1.25rem;
+                    padding: 1.5rem;
                 }
 
                 .char-card__name {
@@ -378,7 +379,7 @@ const Characters = () => {
                     letter-spacing: 0.05em;
                     cursor: pointer;
                     position: relative;
-                    transition: background 0.2s ease, color 0.2s ease;
+                    transition: background 0.2s var(--ease-premium), color 0.2s var(--ease-premium);
                 }
 
                 .char-card__trait:hover {

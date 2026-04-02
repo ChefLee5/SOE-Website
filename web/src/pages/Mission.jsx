@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 /* ── Reveal Hook ── */
 const useReveal = () => {
@@ -78,17 +79,17 @@ const AnimatedStat = ({ value, suffix = '', label, color }) => {
 };
 
 const Mission = () => {
+    const { t } = useTranslation();
     return (
         <div className="mission-page">
             {/* ── Hero ── */}
             <header className="mission-hero">
                 <div className="container text-center">
-                    <div className="animate-fade-up">
-                        <div className="section-label">Our Mission</div>
-                        <h1>
-                            A <span className="accent-text">State of Emergency</span>
+                    <div>
+                        <h1 className="hero-stagger" style={{ animationDelay: '0.1s' }}>
+                            A <span className="accent-gradient">State of Emergency</span>
                         </h1>
-                        <p className="section-subtitle" style={{ margin: '1rem auto' }}>
+                        <p className="section-subtitle hero-stagger" style={{ margin: '1.5rem auto', animationDelay: '0.25s' }}>
                             The world's most vulnerable children are running out of time.
                             SOE exists to change that equation through the universal language of music.
                         </p>
@@ -210,8 +211,9 @@ const Mission = () => {
                                 {t('mission.cta_title_1')}{' '}
                                 <span className="accent-text">{t('mission.cta_title_2')}</span>
                             </h3>
-                            <div style={{ marginTop: '2rem' }}>
-                                <Link to="/media" className="page-bottom-link">
+                            <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                <Link to="/join" className="btn btn-gold">Join the Quest</Link>
+                                <Link to="/media" className="btn btn-outline">
                                     {t('home.explore_media')}
                                 </Link>
                             </div>
@@ -223,8 +225,8 @@ const Mission = () => {
             <style>{`
         .mission-page .reveal-block {
           opacity: 0;
-          transform: translateY(25px);
-          transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
+          transform: translateY(20px);
+          transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
         }
         .mission-page .reveal-block.revealed {
           opacity: 1;

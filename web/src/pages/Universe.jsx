@@ -141,13 +141,12 @@ const Universe = () => {
       <header className="universe-hero" style={{ position: 'relative', overflow: 'hidden' }}>
         <ParallaxHero variant="universe" />
         <div className="container">
-          <div className="universe-hero__content animate-fade-up text-center">
-            <div className="section-label">{t('universe.hero_label')}</div>
-            <h1>
+          <div className="universe-hero__content text-center">
+            <h1 className="hero-stagger" style={{ animationDelay: '0.1s' }}>
               {t('universe.hero_title_1')}{' '}
-              <span className="text-gold">{t('universe.hero_title_2')}</span>
+              <span className="accent-gradient">{t('universe.hero_title_2')}</span>
             </h1>
-            <p className="section-subtitle" style={{ margin: '1rem auto' }}>
+            <p className="section-subtitle hero-stagger" style={{ margin: '1.5rem auto', animationDelay: '0.25s' }}>
               {t('universe.hero_subtitle')}
             </p>
           </div>
@@ -161,7 +160,7 @@ const Universe = () => {
             <div className="seriphia-block">
               <div className="seriphia-block__image">
                 <img
-                  src={assetPath('/assets/characters/ETERNAL LEARNING MOTHER.png')}
+                  src={assetPath('/assets/characters/SERIPHIA.png')}
                   alt="Seriphia — An Eternal Learning Mother"
                 />
               </div>
@@ -311,9 +310,12 @@ const Universe = () => {
           </div>
 
           <RevealSection className="text-center" delay={0.4}>
-            <div style={{ marginTop: '3rem' }}>
-              <Link to="/media" className="page-bottom-link">
+            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link to="/media" className="btn btn-gold">
                 {t('home.explore_media')}
+              </Link>
+              <Link to="/characters" className="btn btn-outline">
+                Meet the Heroes →
               </Link>
             </div>
           </RevealSection>
@@ -323,8 +325,8 @@ const Universe = () => {
       <style>{`
         .universe-page .reveal-block {
           opacity: 0;
-          transform: translateY(25px);
-          transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
+          transform: translateY(20px);
+          transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
         }
         .universe-page .reveal-block.revealed {
           opacity: 1;
@@ -401,7 +403,7 @@ const Universe = () => {
           border-radius: var(--radius-lg);
           border: 1px solid var(--color-border-light);
           box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 60px var(--color-sage-glow);
-          transition: transform 0.5s var(--ease-gentle), box-shadow 0.5s var(--ease-gentle);
+          transition: transform 0.5s var(--ease-premium), box-shadow 0.5s var(--ease-premium);
         }
 
         .map-float-wrapper:hover .map-image {
@@ -468,14 +470,14 @@ const Universe = () => {
         .duos-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 1.5rem;
+          gap: 2rem;
         }
 
         .duo-card {
           cursor: pointer;
           text-align: center;
           padding: 2rem;
-          transition: all var(--transition-med);
+          transition: all 0.35s var(--ease-premium);
         }
 
         @media (max-width: 480px) {
@@ -519,11 +521,11 @@ const Universe = () => {
           height: auto;
           display: block;
           border-bottom: 4px solid;
-          transition: transform 0.4s var(--ease-gentle);
+          transition: transform 0.5s var(--ease-premium);
         }
 
         .duo-card:hover .duo-card__duo-image {
-          transform: scale(1.05);
+          transform: scale(1.04);
         }
 
         .duo-card__names {

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ResearchAssistant from '../components/ResearchAssistant';
 import { assetPath } from '../utils/assetPath';
 
@@ -34,15 +35,15 @@ const RevealSection = ({ children, className = '', delay = 0 }) => {
 };
 
 const Science = () => {
+    const { t } = useTranslation();
     return (
         <div className="science-page">
             {/* ── Hero ── */}
             <header className="science-hero">
                 <div className="container text-center">
-                    <div className="animate-fade-up">
-                        <div className="section-label">Pedagogy & Science</div>
-                        <h1>Science of the <span className="text-gold">Sound</span></h1>
-                        <p className="section-subtitle" style={{ margin: '1rem auto' }}>
+                    <div>
+                        <h1 className="hero-stagger" style={{ animationDelay: '0.1s' }}>Science of the <span className="accent-gradient">Sound</span></h1>
+                        <p className="section-subtitle hero-stagger" style={{ margin: '1.5rem auto', animationDelay: '0.25s' }}>
                             Chronicles of the Clock: Understanding the neurological architecture behind every rhythm.
                         </p>
                     </div>
@@ -162,7 +163,7 @@ const Science = () => {
                                 </div>
                                 <div className="science-image-wrap animate-float">
                                     <img
-                                        src={assetPath('/assets/characters/ELIAS.jpg')}
+                                        src={assetPath('/assets/characters/ELIAS.png')}
                                         alt="Elias - The Time Keeper"
                                         className="science-image"
                                     />
@@ -181,8 +182,9 @@ const Science = () => {
                         <p className="section-subtitle" style={{ marginTop: '1rem' }}>
                             {t('science.cta_subtitle')}
                         </p>
-                        <div style={{ marginTop: '3rem' }}>
-                            <Link to="/media" className="page-bottom-link">
+                        <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <Link to="/join" className="btn btn-gold">Join the Quest</Link>
+                            <Link to="/media" className="btn btn-outline">
                                 {t('home.explore_media')}
                             </Link>
                         </div>
@@ -193,8 +195,8 @@ const Science = () => {
             <style>{`
                 .science-page .reveal-block {
                     opacity: 0;
-                    transform: translateY(25px);
-                    transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
+                    transform: translateY(20px);
+                    transition: opacity 0.7s var(--ease-premium), transform 0.7s var(--ease-premium);
                 }
                 .science-page .reveal-block.revealed {
                     opacity: 1;

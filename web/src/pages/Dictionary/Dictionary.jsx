@@ -14,6 +14,7 @@
 import React, { useState, useCallback } from 'react';
 import { LANDS, getTotalWordCount } from './dictionaryData';
 import { useAudio } from './useAudio';
+import { assetPath } from '../../utils/assetPath';
 import './dictionary.css';
 
 /* ── Learning Modes ── */
@@ -94,6 +95,40 @@ const LandSelector = ({ onSelectLand }) => (
     </div>
 );
 
+/* ── ASL Overlay (Modal Popup) ── */
+const ASLOverlay = ({ item, onClose }) => {
+    if (!item) return null;
+
+    // Auto-dismiss after 4 seconds
+    React.useEffect(() => {
+        const timer = setTimeout(onClose, 4000);
+        return () => clearTimeout(timer);
+    }, [item, onClose]);
+
+    return (
+        <div className="asl-overlay" onClick={onClose} role="dialog" aria-label={`ASL sign for ${item.word}`}>
+            <div className="asl-overlay__card animate-in" onClick={e => e.stopPropagation()}>
+                {item.aslSrc ? (
+                    <img
+                        className="asl-overlay__media"
+                        src={assetPath(item.aslSrc)}
+                        alt={`ASL sign for ${item.word}`}
+                    />
+                ) : (
+                    <div className="asl-overlay__placeholder">
+                        <span className="asl-overlay__placeholder-icon">🤟</span>
+                        <span>ASL sign coming soon</span>
+                    </div>
+                )}
+                <div className="asl-overlay__label">{item.word}</div>
+                <button className="asl-overlay__close" onClick={onClose} aria-label="Close ASL overlay">
+                    ✕
+                </button>
+            </div>
+        </div>
+    );
+};
+
 /* ── Hotspot Item ── */
 const HotspotItem = ({
     item,
@@ -102,6 +137,7 @@ const HotspotItem = ({
     quizTarget,
     quizResult,
     onHotspotClick,
+    showASL,
 }) => {
     const isActive = activeWord === item.id;
     const isQuizCorrect = quizResult === 'correct' && quizTarget === item.id;
@@ -129,6 +165,9 @@ const HotspotItem = ({
             aria-label={mode === MODES.QUIZ ? 'Vocabulary hotspot' : item.word}
             title={mode === MODES.QUIZ ? '' : item.word}
         >
+            {showASL && item.aslSrc && (
+                <span className="hotspot__asl-badge" aria-label="ASL sign available">🤟</span>
+            )}
             <span className="hotspot__icon" aria-hidden="true">
                 {item.icon}
             </span>
@@ -168,7 +207,7 @@ const PrintReference = ({ word }) => (
 );
 
 /* ── Scene View ── */
-const SceneView = ({ landId, mode, onBack }) => {
+const SceneView = ({ landId, mode, onBack, showASL }) => {
     const land = LANDS.find(l => l.id === landId);
     const { speak, stop } = useAudio();
 
@@ -176,6 +215,7 @@ const SceneView = ({ landId, mode, onBack }) => {
     const [activeCategory, setActiveCategory] = useState('All');
     const [activeWord, setActiveWord] = useState(null);
     const [printWord, setPrintWord] = useState('');
+    const [aslItem, setAslItem] = useState(null);
 
     // Quiz state
     const [quizTarget, setQuizTarget] = useState(null);
@@ -246,10 +286,15 @@ const SceneView = ({ landId, mode, onBack }) => {
                 setPrintWord(item.word);
             }
 
+            // Show ASL overlay if ASL is toggled on
+            if (showASL) {
+                setAslItem(item);
+            }
+
             // Clear active state after speech
             setTimeout(() => setActiveWord(null), 1500);
         }
-    }, [mode, land.slowMode, quizTarget, speak, stop, startQuizRound]);
+    }, [mode, land.slowMode, quizTarget, speak, stop, startQuizRound, showASL]);
 
     /* ── Replay quiz prompt ── */
     const handleReplay = useCallback(() => {
@@ -335,9 +380,15 @@ const SceneView = ({ landId, mode, onBack }) => {
                         quizTarget={quizTarget}
                         quizResult={quizResult}
                         onHotspotClick={handleHotspotClick}
+                        showASL={showASL}
                     />
                 ))}
             </div>
+
+            {/* ASL Overlay */}
+            {aslItem && (
+                <ASLOverlay item={aslItem} onClose={() => setAslItem(null)} />
+            )}
         </div>
     );
 };
@@ -348,6 +399,7 @@ const SceneView = ({ landId, mode, onBack }) => {
 const Dictionary = () => {
     const [mode, setMode] = useState(MODES.READING);
     const [activeLand, setActiveLand] = useState(null);
+    const [showASL, setShowASL] = useState(false);
 
     return (
         <div className="dictionary">
@@ -366,8 +418,18 @@ const Dictionary = () => {
                 </div>
             </header>
 
-            {/* ── Mode Toggle (always visible) ── */}
-            <ModeToggle mode={mode} onSetMode={setMode} />
+            {/* ── Mode Toggle + ASL Toggle ── */}
+            <div className="dictionary__controls">
+                <ModeToggle mode={mode} onSetMode={setMode} />
+                <button
+                    className={`asl-toggle ${showASL ? 'asl-toggle--active' : ''}`}
+                    onClick={() => setShowASL(prev => !prev)}
+                    aria-pressed={showASL}
+                    aria-label={showASL ? 'Turn off ASL signs' : 'Turn on ASL signs'}
+                >
+                    🤟 ASL {showASL ? 'ON' : 'OFF'}
+                </button>
+            </div>
 
             {/* ── Land Selector or Scene ── */}
             {!activeLand ? (
@@ -376,6 +438,7 @@ const Dictionary = () => {
                 <SceneView
                     landId={activeLand}
                     mode={mode}
+                    showASL={showASL}
                     onBack={() => {
                         setActiveLand(null);
                     }}
