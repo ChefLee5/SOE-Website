@@ -1,5 +1,3 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const ResearchAssistant = () => {

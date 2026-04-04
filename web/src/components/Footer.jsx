@@ -11,14 +11,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="footer__brand">
             <div className="footer__logo">
-              <span className="footer__logo-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18V5l12-2v13" />
-                  <circle cx="6" cy="18" r="3" />
-                  <circle cx="18" cy="16" r="3" />
-                </svg>
-              </span>
-              <span>Sound of Essentials: <span className="logo-accent-cursive" style={{ color: '#4ADE80' }}>Rhythm Quest</span></span>
+              <span className="footer__logo-icon">♪</span>
+              <span>Sound of Essentials: <span className="logo-accent-cursive">Rhythm Quest</span></span>
             </div>
             <p className="footer__tagline">
               {t('footer.tagline')}
@@ -69,35 +63,24 @@ const Footer = () => {
         </div>
 
         <div className="footer__bottom">
-          <p>&copy; {new Date().getFullYear()} The Sound of Essentials: <span className="logo-accent-cursive" style={{ color: '#4ADE80' }}>Rhythm Quest</span>. {t('footer.all_rights_reserved')}</p>
+          <p>&copy; {new Date().getFullYear()} The Sound of Essentials: <span className="logo-accent-cursive">Rhythm Quest</span>. {t('footer.all_rights_reserved')}</p>
           <p>{t('home.hero_subtitle').split('.')[1]}. {t('home.hero_subtitle').split('.')[2]}. {t('home.hero_subtitle').split('.')[3]}</p>
         </div>
       </div>
 
       <style>{`
         .site-footer {
-          background: linear-gradient(135deg, #312E81 0%, #4F46E5 50%, #1E1B4B 100%);
+          background: linear-gradient(135deg, #7B1FA2, #1E88E5);
           padding: 4rem 0 2rem 0;
           position: relative;
           z-index: 1;
         }
 
-        .site-footer::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #4F46E5, #22C55E, #F59E0B, #4F46E5);
-          border-radius: 0 0 2px 2px;
-        }
-
         .footer__grid {
           display: grid;
           grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-          gap: 3.5rem;
-          margin-bottom: 3.5rem;
+          gap: 3rem;
+          margin-bottom: 3rem;
         }
 
         .footer__brand {
@@ -116,23 +99,19 @@ const Footer = () => {
         }
 
         .footer__logo-icon {
+          font-size: 1.3rem;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 38px;
-          height: 38px;
-          background: rgba(255, 255, 255, 0.12);
-          border: 2px solid rgba(255, 255, 255, 0.2);
-          border-radius: 12px;
-          color: #fff;
-          box-shadow:
-            3px 3px 8px rgba(0, 0, 0, 0.15),
-            inset 0 1px 2px rgba(255, 255, 255, 0.15);
+          width: 34px;
+          height: 34px;
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: var(--radius-full);
         }
 
         .footer__tagline {
           font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.65);
+          color: rgba(255, 255, 255, 0.75);
           font-style: italic;
           margin-bottom: 1.5rem;
         }
@@ -144,27 +123,20 @@ const Footer = () => {
 
         .footer__social a {
           color: #fff;
-          transition: all var(--transition-clay);
+          transition: all var(--transition-med);
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 42px;
-          height: 42px;
-          border-radius: 14px;
-          background: rgba(255, 255, 255, 0.1);
-          border: 2px solid rgba(255, 255, 255, 0.15);
-          box-shadow:
-            3px 3px 8px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(255, 255, 255, 0.1);
-          cursor: pointer;
+          width: 38px;
+          height: 38px;
+          border-radius: var(--radius-full);
+          background: rgba(255, 255, 255, 0.15);
+          border: none;
         }
 
         .footer__social a:hover {
-          background: rgba(255, 255, 255, 0.2);
-          transform: translateY(-3px);
-          box-shadow:
-            4px 4px 12px rgba(0, 0, 0, 0.15),
-            inset 0 2px 3px rgba(255, 255, 255, 0.15);
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-2px);
         }
 
         .footer__col {
@@ -175,8 +147,8 @@ const Footer = () => {
 
         .footer__heading {
           font-family: var(--font-heading);
-          font-weight: 700;
-          font-size: 0.9rem;
+          font-weight: 600;
+          font-size: 0.85rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #fff;
@@ -185,44 +157,36 @@ const Footer = () => {
 
         .footer__link {
           font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.6);
-          transition: color 0.25s var(--ease-premium), transform 0.25s var(--ease-premium);
-          display: inline-block;
-          cursor: pointer;
+          color: rgba(255, 255, 255, 0.7);
+          transition: color var(--transition-med);
         }
 
         .footer__link:hover {
-          color: #4ADE80;
-          transform: translateX(4px);
+          color: #fff;
         }
 
         .footer__newsletter-text {
           font-size: 0.85rem;
-          color: rgba(255, 255, 255, 0.6);
+          color: rgba(255, 255, 255, 0.7);
           line-height: 1.6;
         }
 
         .footer__subscribe-btn {
-          background: rgba(34, 197, 94, 0.2);
-          color: #4ADE80;
-          border: 2px solid rgba(34, 197, 94, 0.35);
-          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.2);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: var(--radius-xl);
           font-family: var(--font-heading);
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow:
-            3px 3px 8px rgba(0, 0, 0, 0.1),
-            inset 0 1px 2px rgba(34, 197, 94, 0.1);
+          font-weight: 600;
         }
 
         .footer__subscribe-btn:hover {
-          background: rgba(34, 197, 94, 0.35);
-          transform: translateY(-2px);
+          background: rgba(255, 255, 255, 0.35);
         }
 
         .footer__bottom {
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+          padding-top: 1.5rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -230,7 +194,7 @@ const Footer = () => {
 
         .footer__bottom p {
           font-size: 0.8rem;
-          color: rgba(255, 255, 255, 0.5);
+          color: rgba(255, 255, 255, 0.6);
         }
 
         @media (max-width: 768px) {
