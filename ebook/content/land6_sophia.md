@@ -305,6 +305,16 @@
 | 13 | Dispatcher | /dis-PACH-er/ | The 911 dispatcher sends help to the right location. | Fingerspell or sign each word | ___________ |
 | 14 | Lifeguard | /LYF-gard/ | The lifeguard watches swimmers at the pool. | Fingerspell or sign each word | ___________ |
 | 15 | Security guard | /sih-KYOOR-ih-tee GARD/ | A security guard monitors the building entrance. | Fingerspell or sign each word | ___________ |
+| 16 | Social worker | /SOH-shul WUR-ker/ | A social worker connects families with community resources. | Fingerspell or sign each word | ___________ |
+| 17 | School nurse | /SKOOL NURS/ | The school nurse checks on sick children during the day. | Fingerspell or sign each word | ___________ |
+| 18 | EMT | /EE-EM-TEE/ | An EMT provides emergency medical care in the ambulance. | Fingerspell EMT | ___________ |
+| 19 | Sanitation worker | /san-ih-TAY-shun WUR-ker/ | The sanitation worker keeps streets and parks clean. | Fingerspell or sign each word | ___________ |
+| 20 | Animal control | /AN-ih-mul kun-TROHL/ | Animal control officers rescue stray and injured animals. | Fingerspell or sign each word | ___________ |
+| 21 | Park ranger | /PARK RAYN-jer/ | The park ranger protects wildlife and helps visitors. | Fingerspell or sign each word | ___________ |
+| 22 | Meter reader | /MEE-ter REE-der/ | The meter reader checks utility meters each month. | Fingerspell or sign each word | ___________ |
+| 23 | Bus driver | /BUS DRY-ver/ | The bus driver safely carries passengers on the route. | Fingerspell or sign each word | ___________ |
+| 24 | Volunteer | /vol-un-TEER/ | A volunteer gives time to help others without pay. | Fingerspell or sign each word | ___________ |
+| 25 | Public servant | /PUB-lik SUR-vunt/ | A public servant works for the government to help people. | Fingerspell or sign each word | ___________ |
 
 > **🤝 Ezra's Tip:** *"Community helpers are everywhere! Next time you see one, say: 'Thank you!' in English. 'Thank you, Officer. Thank you, Mail Carrier. Thank you, Librarian.' Gratitude is a language that everyone speaks."*
 
@@ -331,6 +341,16 @@
 | 13 | Tolerance | /TOL-er-uns/ | Tolerance means accepting people who are different from you. | Fingerspell or sign each word | ___________ |
 | 14 | Diversity | /dih-VUR-sih-tee/ | Diversity means having people of many backgrounds together. | Fingerspell or sign each word | ___________ |
 | 15 | Inclusion | /in-KLOO-zhun/ | Inclusion means making sure everyone feels welcome. | Fingerspell or sign each word | ___________ |
+| 16 | Compassion | /kum-PASH-un/ | Compassion means caring about the suffering of others. | Fingerspell or sign each word | ___________ |
+| 17 | Integrity | /in-TEG-rih-tee/ | Integrity means doing the right thing even when no one is watching. | Fingerspell or sign each word | ___________ |
+| 18 | Empathy | /EM-puh-thee/ | Empathy means understanding how another person feels. | Fingerspell or sign each word | ___________ |
+| 19 | Accountability | /uh-kown-tuh-BIL-ih-tee/ | Accountability means being responsible for your actions. | Fingerspell or sign each word | ___________ |
+| 20 | Privacy | /PRY-vuh-see/ | Privacy is the right to keep personal information safe. | Fingerspell or sign each word | ___________ |
+| 21 | Consent | /kun-SENT/ | Consent means giving permission before something happens. | Fingerspell or sign each word | ___________ |
+| 22 | Advocate | /AD-voh-kayt/ | An advocate speaks up for people who need help. | Fingerspell or sign each word | ___________ |
+| 23 | Equity | /EK-wih-tee/ | Equity means giving everyone what they need to succeed. | Fingerspell or sign each word | ___________ |
+| 24 | Community service | /kuh-MYOO-nih-tee SUR-vis/ | Community service means volunteering to improve your neighborhood. | Fingerspell or sign each word | ___________ |
+| 25 | Civic engagement | /SIV-ik en-GAYJ-ment/ | Civic engagement means taking part in your community's decisions. | Fingerspell or sign each word | ___________ |
 
 > **🌍 Athena's Tip:** *"Big words, big ideas! Say: 'I believe in EQUALITY. I practice TOLERANCE. I value DIVERSITY.' These words describe the world we want to build — together."*
 
@@ -653,8 +673,8 @@
 | Government & Civics | 25 |
 | Money Management & Bills | 20 |
 | School Subjects & Education | 20 |
-| Community Helpers & Services | 15 |
-| Rights & Responsibilities | 15 |
+| Community Helpers & Services | 25 |
+| Rights & Responsibilities | 25 |
 | Forms & Documents | 20 |
 | Housing & Renting | 20 |
 | Childcare & Parenting | 20 |
@@ -664,4 +684,4 @@
 | Banking & Online Services | 25 |
 | Taxes & Filing | 25 |
 | Voting & Elections | 25 |
-| **TOTAL** | **425** |
+| **TOTAL** | **445** |
