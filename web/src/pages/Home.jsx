@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ParallaxHero from '../components/ParallaxHero';
-import { assetPath } from '../utils/assetPath';
 
 /* ── Intersection Observer Hook ── */
 const useReveal = () => {
@@ -73,7 +72,6 @@ const Home = () => {
         <ParallaxHero variant="home" />
         <div className="container hero__inner">
           <div className="hero__content animate-fade-up">
-            <div className="section-label">{t('home.hero_label')}</div>
             <h1 className="hero__title">
               {t('home.hero_title_1')}{' '}
               <span className="text-gold">{t('home.hero_title_2')}</span>
@@ -84,22 +82,14 @@ const Home = () => {
 
             <div className="hero__actions">
               <Link to="/join" className="btn btn-gold">{t('hero.join_button')}</Link>
+              <Link to="/universe" className="btn btn-outline">{t('navbar.universe')} →</Link>
             </div>
 
             <p className="hero__note">
               {t('home.hero_note')}
             </p>
           </div>
-          <div className="hero__visual animate-fade-in animate-delay-3">
-            <div className="hero__image-wrapper animate-float">
-              <img
-                src={assetPath('/assets/soe-cover.png')}
-                alt="Kenji and Aiko looking at the Global Sound Map — The Sound of Essentials: Rhythm Quest cover art"
-                className="hero__image"
-              />
-              <div className="hero__image-glow" aria-hidden="true"></div>
-            </div>
-          </div>
+
         </div>
         <div className="hero__scroll-hint" aria-hidden="true">
           <span>↓</span>
@@ -196,13 +186,18 @@ const Home = () => {
       <section className="section cta-section text-center">
         <div className="container">
           <RevealSection>
-            <h2>Biology doesn't wait for systems to fix themselves.</h2>
+            <div className="cta-icon" aria-hidden="true">🔔</div>
+            <h2>{t('home.cta_title')}</h2>
             <p className="section-subtitle" style={{ marginTop: '1rem' }}>
-              Join the ecosystem of support. Be part of the solution.
+              {t('home.cta_subtitle')}{' '}
+              <span style={{ color: 'var(--color-green)' }}>Be part of the solution.</span>
             </p>
-            <div style={{ marginTop: '3rem' }}>
-              <Link to="/media" className="page-bottom-link">
-                Explore the Media Room →
+            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link to="/media" className="btn btn-gold">
+                {t('home.explore_media')}
+              </Link>
+              <Link to="/join" className="btn btn-sage">
+                {t('hero.join_button')}
               </Link>
             </div>
           </RevealSection>
@@ -263,7 +258,8 @@ const Home = () => {
 
         .hero__image-wrapper {
           position: relative;
-          max-width: 460px;
+          max-width: 520px;
+          width: 100%;
         }
 
         .hero__image {
@@ -409,7 +405,21 @@ const Home = () => {
 
         /* ── CTA Section ── */
         .cta-section {
-          background: linear-gradient(to bottom, transparent, rgba(123, 31, 162, 0.04));
+          background: linear-gradient(135deg,
+            rgba(76, 175, 80, 0.05) 0%,
+            rgba(123, 31, 162, 0.06) 50%,
+            rgba(30, 136, 229, 0.04) 100%);
+          border-radius: var(--radius-lg);
+          margin: 0 1rem 2rem;
+          padding-top: 5rem;
+          padding-bottom: 5rem;
+        }
+
+        .cta-icon {
+          font-size: 3rem;
+          margin-bottom: 1.5rem;
+          display: block;
+          animation: gentleFloat 4s ease-in-out infinite;
         }
 
         /* ── Responsive ── */
@@ -429,7 +439,7 @@ const Home = () => {
           }
 
           .hero__image-wrapper {
-            max-width: 340px;
+            max-width: 100%;
           }
 
           .why-stats {

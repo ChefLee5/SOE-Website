@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import SplashScreen from './components/SplashScreen';
+import SplineBackground from './components/SplineBackground';
 import Home from './pages/Home';
 import Universe from './pages/Universe';
 import MediaRoom from './pages/MediaRoom';
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <div className="app">
       {showSplash && <SplashScreen onFinished={handleSplashFinished} />}
-      <div className="atmosphere" aria-hidden="true"></div>
+      <SplineBackground />
       <ScrollToTop />
       <Navbar />
       <main>

@@ -66,6 +66,7 @@ const Navbar = () => {
               key={to}
               to={to}
               className={`navbar__link ${location.pathname === to ? 'navbar__link--active' : ''}`}
+              aria-current={location.pathname === to ? 'page' : undefined}
             >
               {label}
             </Link>

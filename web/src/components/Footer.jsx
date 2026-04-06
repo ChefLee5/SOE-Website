@@ -39,6 +39,7 @@ const Footer = () => {
             <Link to="/characters" className="footer__link">{t('navbar.heroes')}</Link>
             <Link to="/science" className="footer__link">{t('footer.sci_sound')}</Link>
             <Link to="/media" className="footer__link">{t('navbar.media')}</Link>
+            <Link to="/dictionary" className="footer__link">📖 Picture Dictionary</Link>
             <Link to="/mission" className="footer__link">{t('navbar.mission')}</Link>
           </div>
 
@@ -64,7 +65,7 @@ const Footer = () => {
 
         <div className="footer__bottom">
           <p>&copy; {new Date().getFullYear()} The Sound of Essentials: <span className="logo-accent-cursive">Rhythm Quest</span>. {t('footer.all_rights_reserved')}</p>
-          <p>{t('home.hero_subtitle').split('.')[1]}. {t('home.hero_subtitle').split('.')[2]}. {t('home.hero_subtitle').split('.')[3]}</p>
+          <p style={{ fontStyle: 'italic' }}>{t('footer.tagline')}</p>
         </div>
       </div>
 

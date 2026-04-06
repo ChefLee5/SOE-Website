@@ -160,10 +160,7 @@ const Universe = () => {
           <RevealSection>
             <div className="seriphia-block">
               <div className="seriphia-block__image">
-                <img
-                  src={assetPath('/assets/characters/ETERNAL LEARNING MOTHER.png')}
-                  alt="Seriphia — An Eternal Learning Mother"
-                />
+                <div className="seriphia-placeholder" aria-hidden="true">✨</div>
               </div>
               <div className="seriphia-block__text">
                 <span className="section-label">{t('universe.seriphia_label')}</span>
@@ -195,11 +192,7 @@ const Universe = () => {
             <div className="map-container">
               <div className="map-glow-ring" />
               <div className="map-float-wrapper">
-                <img
-                  src={assetPath('/assets/Quest map.gif')}
-                  alt="The Global Sound Map — Seven lands of learning"
-                  className="map-image"
-                />
+                <div className="map-image map-image--placeholder" aria-label="Seven Lands Map">🗺️</div>
                 {/* Animated land pins */}
                 {[
                   { land: 'Harmonia', color: '#d4a843', top: '28%', left: '18%', delay: '0s' },
@@ -266,12 +259,7 @@ const Universe = () => {
                   </div>
 
                   <div className="duo-card__image-wrap">
-                    <img
-                      src={duo.duoImage}
-                      alt={`${duo.duo[0]} & ${duo.duo[1]}`}
-                      className="duo-card__duo-image"
-                      style={{ borderColor: duo.landColor }}
-                    />
+                    <div className="duo-card__duo-placeholder" style={{ borderColor: duo.landColor }}>{duo.landIcon}</div>
                   </div>
                   <p className="duo-card__names">{duo.duo.join(' & ')}</p>
 

@@ -12,6 +12,7 @@
   "dependencies": {
     "@octokit/rest": "^22.0.1",
     "@remotion/player": "4.0.427",
+    "@splinetool/react-spline": "^4.1.0",
     "axios": "^1.13.5",
     "dotenv": "^17.3.1",
     "framer-motion": "^12.34.3",

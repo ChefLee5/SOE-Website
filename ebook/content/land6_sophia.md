@@ -248,6 +248,12 @@
 | 18 | Paycheck | /PAY-chek/ | The paycheck arrives every two weeks. | Fingerspell or sign each word | ___________ |
 | 19 | Direct deposit | /dih-REKT dih-POZ-it/ | Direct deposit puts money straight into your bank. | Fingerspell or sign each word | ___________ |
 | 20 | Savings | /SAY-vingz/ | Put ten percent of every paycheck into savings. | Both hands scoop toward body (gathering) | ___________ |
+| 21 | Auto-pay | /AW-toh-PAY/ | Set up auto-pay so bills are never late. | Fingerspell or sign each word | ___________ |
+| 22 | Overdraft protection | /OH-ver-draft proh-TEK-shun/ | Overdraft protection stops your account from going negative. | Fingerspell or sign each word | ___________ |
+| 23 | Co-pay | /KOH-pay/ | Pay a co-pay each time you visit the doctor. | Fingerspell or sign each word | ___________ |
+| 24 | Subscription | /sub-SKRIP-shun/ | A streaming subscription charges a monthly fee. | Fingerspell or sign each word | ___________ |
+| 25 | Emergency fund | /ih-MUR-jen-see FUND/ | An emergency fund covers unexpected expenses. | Fingerspell or sign each word | ___________ |
+| 26 | Net pay | /NET PAY/ | Net pay is what you take home after taxes. | Fingerspell or sign each word | ___________ |
 
 > **🧾 Ezra's Tip:** *"Adulting in English means knowing money words. Practice: 'I pay RENT. I pay my BILLS. I have a BUDGET. I put money in SAVINGS.' These are power sentences for grown-up life!"*
 

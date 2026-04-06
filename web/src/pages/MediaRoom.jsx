@@ -81,7 +81,13 @@ const AlbumCarousel = ({ tracks, currentTrack, onSelect }) => {
               }}
               onClick={() => onSelect(i)}
             >
-              <img src={t.cover} alt={t.title} className="album-cover" />
+              <div
+                className="album-cover album-cover--placeholder"
+                style={{ background: `${t.color}22`, borderColor: `${t.color}44` }}
+                aria-hidden="true"
+              >
+                <span style={{ fontSize: '2.5rem' }}>{t.domainIcon}</span>
+              </div>
               <AnimatePresence>
                 {isActive && (
                   <motion.div
@@ -380,11 +386,9 @@ const MediaRoom = () => {
           <RevealSection>
             <div className="book-viewer glass-card">
               <div className="book-viewer__display">
-                <img
-                  src={bookPages[bookIndex]}
-                  alt={`Coloring book page ${bookIndex + 1}`}
-                  className="book-viewer__page"
-                />
+                <div className="book-viewer__page book-viewer__page--placeholder" aria-label={`Coloring book page ${bookIndex + 1}`}>
+                  <span>{bookIndex + 1}</span>
+                </div>
               </div>
               <div className="book-viewer__controls">
                 <button
@@ -431,11 +435,9 @@ const MediaRoom = () => {
           <RevealSection>
             <div className="book-viewer glass-card">
               <div className="book-viewer__display">
-                <img
-                  src={soeBookPages[soeBookIndex]}
-                  alt={`SOE Storybook page ${soeBookIndex + 1}`}
-                  className="book-viewer__page"
-                />
+                <div className="book-viewer__page book-viewer__page--placeholder" aria-label={`SOE Storybook page ${soeBookIndex + 1}`}>
+                  <span>{soeBookIndex + 1}</span>
+                </div>
               </div>
               <div className="book-viewer__controls">
                 <button
@@ -601,6 +603,13 @@ const MediaRoom = () => {
           height: 100%;
           object-fit: cover;
           display: block;
+        }
+
+        .album-cover--placeholder {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid;
         }
 
         .album-label {
@@ -886,6 +895,20 @@ const MediaRoom = () => {
         .book-viewer__page {
           width: 100%;
           display: block;
+        }
+
+        .book-viewer__page--placeholder {
+          min-height: 420px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0,0,0,0.04);
+          border-radius: var(--radius-md);
+          border: 2px dashed var(--color-border);
+          font-family: var(--font-heading);
+          font-size: 4rem;
+          font-weight: 700;
+          color: var(--color-text-muted);
         }
 
         .book-viewer__controls {

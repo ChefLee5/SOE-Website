@@ -161,11 +161,7 @@ const Science = () => {
                                     </p>
                                 </div>
                                 <div className="science-image-wrap animate-float">
-                                    <img
-                                        src={assetPath('/assets/characters/ELIAS.jpg')}
-                                        alt="Elias - The Time Keeper"
-                                        className="science-image"
-                                    />
+                                    <div className="science-image-placeholder">⏰</div>
                                 </div>
                             </div>
                         </div>
@@ -256,6 +252,18 @@ const Science = () => {
                     border-radius: var(--radius-lg);
                     border: 2px solid var(--color-border);
                     box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+                }
+
+                .science-image-placeholder {
+                    width: 100%;
+                    min-height: 300px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 6rem;
+                    background: rgba(0,0,0,0.03);
+                    border-radius: var(--radius-lg);
+                    border: 2px dashed var(--color-border);
                 }
 
                 @media (max-width: 768px) {

@@ -85,12 +85,13 @@ const CharacterCard = ({ char, index, isExpanded, onToggle }) => {
                 aria-expanded={isExpanded}
             >
                 <div className="char-card__image-wrap">
-                    <img
-                        src={char.img}
-                        alt={char.name}
-                        className="char-card__image"
-                        style={{ borderColor: char.landColor }}
-                    />
+                    <div
+                        className="char-card__avatar"
+                        style={{ background: char.landColor }}
+                        aria-hidden="true"
+                    >
+                        {char.name[0]}
+                    </div>
                     <div className="char-card__land-badge" style={{ background: char.landColor }}>
                         {t(`heroes.lands.${char.land}`)}
                     </div>
@@ -300,16 +301,29 @@ const Characters = () => {
                     z-index: 1;
                 }
 
-                .char-card__image {
+                /* ── Avatar Placeholder (no image) ── */
+                .char-card__avatar {
                     width: 100%;
-                    height: auto;
-                    display: block;
-                    border-bottom: 4px solid;
+                    min-height: 220px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: var(--font-heading);
+                    font-size: 5rem;
+                    font-weight: 700;
+                    color: rgba(255,255,255,0.85);
+                    letter-spacing: -0.02em;
+                    border-bottom: 4px solid rgba(255,255,255,0.3);
                     transition: transform 0.5s var(--ease-gentle);
                 }
 
-                .char-card:hover .char-card__image {
-                    transform: scale(1.06);
+                .char-card--featured .char-card__avatar {
+                    min-height: 400px;
+                    font-size: 8rem;
+                }
+
+                .char-card:hover .char-card__avatar {
+                    transform: scale(1.04);
                 }
 
                 .char-card__land-badge {
