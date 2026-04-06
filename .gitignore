@@ -57,3 +57,10 @@ The Sound of Essentials Deluxe Edition Music/
 # Large images (>5MB)
 *.psd
 *.ai
+
+# ─── Regeneratable / Backup folders ───
+# EPUB image backup (large PNGs, regeneratable)
+ebook/OEBPS/images_backup/
+# Build artifacts and audit logs
+ebook/audit_report.txt
+web/src/components/SplineHero.jsx
