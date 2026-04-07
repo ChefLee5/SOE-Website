@@ -44,63 +44,63 @@ const Universe = () => {
       landIcon: '🎵',
       landColor: '#d4a843',
       duo: ['Kenji', 'Aiko'],
+      chars: ['KENJI', 'AIKO'],
       focus: t('universe.lands.Harmonia.focus'),
       desc: t('universe.lands.Harmonia.desc'),
-      duoImage: assetPath('/assets/duos/1_Kenji Aiko.jpg'),
     },
     {
       land: 'Numeria',
       landIcon: '🔢',
       landColor: '#7fb685',
       duo: ['Kwame', 'Octavia'],
+      chars: ['KWAME', 'OCTAVIA'],
       focus: t('universe.lands.Numeria.focus'),
       desc: t('universe.lands.Numeria.desc'),
-      duoImage: assetPath('/assets/duos/5_Kwame Octavia.jpg'),
     },
     {
       land: 'Vitalis',
       landIcon: '🤸',
       landColor: '#c4785a',
       duo: ['Felix', 'Amara'],
+      chars: ['FELIX', 'AMARA'],
       focus: t('universe.lands.Vitalis.focus'),
       desc: t('universe.lands.Vitalis.desc'),
-      duoImage: assetPath('/assets/duos/3_Felix Amara.jpg'),
     },
     {
       land: 'Chronia',
       landIcon: '⏰',
       landColor: '#9678c4',
       duo: ['Elias', 'Selene'],
+      chars: ['ELIAS', 'SELENE'],
       focus: t('universe.lands.Chronia.focus'),
       desc: t('universe.lands.Chronia.desc'),
-      duoImage: assetPath('/assets/duos/6_Elias Selene.jpg'),
     },
     {
       land: 'Lexiconia',
       landIcon: '📖',
       landColor: '#d4a843',
       duo: ['Ronan', 'Nerissa'],
+      chars: ['RONAN', 'NERISSA'],
       focus: t('universe.lands.Lexiconia.focus'),
       desc: t('universe.lands.Lexiconia.desc'),
-      duoImage: assetPath('/assets/duos/7_Ronan Nerissa.jpg'),
     },
     {
       land: 'Geometria',
       landIcon: '📐',
       landColor: '#7fb685',
       duo: ['Silas', 'Vesta'],
+      chars: ['SILAS', 'VESTA'],
       focus: t('universe.lands.Geometria.focus'),
       desc: t('universe.lands.Geometria.desc'),
-      duoImage: assetPath('/assets/duos/2_Silas Vesta.jpg'),
     },
     {
       land: 'Natura',
       landIcon: '🌊',
       landColor: '#5ba4c9',
       duo: ['Ezra', 'Athena'],
+      chars: ['EZRA', 'ATHENA'],
       focus: t('universe.lands.Natura.focus'),
       desc: t('universe.lands.Natura.desc'),
-      duoImage: assetPath('/assets/duos/4_Ezra Athena.jpg'),
     },
   ];
 
@@ -160,7 +160,11 @@ const Universe = () => {
           <RevealSection>
             <div className="seriphia-block">
               <div className="seriphia-block__image">
-                <div className="seriphia-placeholder" aria-hidden="true">✨</div>
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/characters/SERIPHIA.png`}
+                  alt="Seriphia — the guardian of the Seven Lands"
+                  className="seriphia-portrait"
+                />
               </div>
               <div className="seriphia-block__text">
                 <span className="section-label">{t('universe.seriphia_label')}</span>
@@ -259,7 +263,18 @@ const Universe = () => {
                   </div>
 
                   <div className="duo-card__image-wrap">
-                    <div className="duo-card__duo-placeholder" style={{ borderColor: duo.landColor }}>{duo.landIcon}</div>
+                    <div className="duo-card__char-pair">
+                      <img
+                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[0]}.png`}
+                        alt={duo.duo[0]}
+                        className="duo-card__char-img"
+                      />
+                      <img
+                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[1]}.png`}
+                        alt={duo.duo[1]}
+                        className="duo-card__char-img"
+                      />
+                    </div>
                   </div>
                   <p className="duo-card__names">{duo.duo.join(' & ')}</p>
 
@@ -339,6 +354,17 @@ const Universe = () => {
           max-height: 500px;
           object-fit: cover;
           width: 100%;
+        }
+
+        .seriphia-portrait {
+          width: 100%;
+          max-height: 520px;
+          object-fit: cover;
+          object-position: top center;
+          border-radius: var(--radius-lg);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.14);
+          border: 2px solid var(--color-border);
+          display: block;
         }
 
         .seriphia-block__text h2 {
@@ -502,16 +528,27 @@ const Universe = () => {
           overflow: hidden;
         }
 
-        .duo-card__duo-image {
-          width: 100%;
-          height: auto;
-          display: block;
-          border-bottom: 4px solid;
-          transition: transform 0.4s var(--ease-gentle);
+        /* ── Character pair inside duo card ── */
+        .duo-card__char-pair {
+          display: flex;
+          gap: 4px;
+          height: 200px;
+          border-radius: var(--radius-md);
+          overflow: hidden;
         }
 
-        .duo-card:hover .duo-card__duo-image {
-          transform: scale(1.05);
+        .duo-card__char-img {
+          flex: 1;
+          width: 50%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          display: block;
+          transition: transform 0.45s var(--ease-gentle);
+        }
+
+        .duo-card:hover .duo-card__char-img {
+          transform: scale(1.06);
         }
 
         .duo-card__names {
