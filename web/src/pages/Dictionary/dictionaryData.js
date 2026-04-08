@@ -27,7 +27,7 @@ export const LANDS = [
         name: 'Harmonia',
         subtitle: 'Language & Manners',
         characters: ['Kenji', 'Aiko'],
-        characterImgs: ['/assets/characters/KENJI.jpg', '/assets/characters/AIKO.png'],
+        characterImgs: ['/assets/characters/KENJI.jpg', '/assets/characters/AIKO.jpg'],
         color: '#d4a843',
         colorLight: '#FEF3C7',
         bgGradient: 'linear-gradient(180deg, #FBBF24 0%, #F59E0B 40%, #D97706 100%)',

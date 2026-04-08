@@ -108,9 +108,24 @@ const ParallaxHero = ({ variant = 'home' }) => {
     }, []);
 
     const elements = variant === 'universe' ? universeElements : homeElements;
+    const bgMap = {
+        home: `${import.meta.env.BASE_URL}assets/backgrounds/bg1.png`,
+        universe: `${import.meta.env.BASE_URL}assets/backgrounds/bg2.png`,
+        media: `${import.meta.env.BASE_URL}assets/backgrounds/bg3.png`,
+    };
+    const bgImage = bgMap[variant];
 
     return (
         <div className="parallax-hero-layer" ref={containerRef} aria-hidden="true">
+            {bgImage && (
+                <div
+                    className="parallax-hero-layer__bg"
+                    style={{
+                        backgroundImage: `url(${bgImage})`,
+                        transform: `translateY(${scrollY * 0.12}px)`,
+                    }}
+                />
+            )}
             {elements.map((el, i) => {
                 const ShapeComponent = SHAPES[el.shape] || Star;
                 return (
@@ -142,6 +157,18 @@ const ParallaxHero = ({ variant = 'home' }) => {
                     overflow: hidden;
                     pointer-events: none;
                     z-index: 0;
+                }
+
+                .parallax-hero-layer__bg {
+                    position: absolute;
+                    inset: -10% -5%;
+                    background-size: cover;
+                    background-position: center;
+                    opacity: 0.09;
+                    filter: blur(3px) saturate(0.7);
+                    mix-blend-mode: luminosity;
+                    will-change: transform;
+                    transition: transform 0.1s linear;
                 }
 
                 .parallax-hero-layer__item {

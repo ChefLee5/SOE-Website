@@ -49,8 +49,10 @@ const bookPages = [
 ].map(assetPath);
 
 const soeBookPages = [
-  '/assets/soe-book/The Sound of Essentials_ Rhythm Quest Book Cover.png',
-  ...Array.from({ length: 15 }, (_, i) => `/assets/soe-book/${i + 2}.png`),
+  '/assets/soe-book/SOE_RQ_COVER.jpg',
+  ...Array.from({ length: 14 }, (_, i) => `/assets/soe-book/${i + 1}.png`),
+  '/assets/soe-book/Page 3.1.png',
+  '/assets/soe-book/Page 7.1.png',
 ].map(assetPath);
 
 /* ── Album Art Carousel ── */
@@ -81,13 +83,22 @@ const AlbumCarousel = ({ tracks, currentTrack, onSelect }) => {
               }}
               onClick={() => onSelect(i)}
             >
-              <div
-                className="album-cover album-cover--placeholder"
-                style={{ background: `${t.color}22`, borderColor: `${t.color}44` }}
-                aria-hidden="true"
-              >
-                <span style={{ fontSize: '2.5rem' }}>{t.domainIcon}</span>
-              </div>
+              {t.cover ? (
+                <img
+                  src={t.cover}
+                  alt={t.title}
+                  className="album-cover"
+                  style={{ objectFit: 'cover' }}
+                />
+              ) : (
+                <div
+                  className="album-cover album-cover--placeholder"
+                  style={{ background: `${t.color}22`, borderColor: `${t.color}44` }}
+                  aria-hidden="true"
+                >
+                  <span style={{ fontSize: '2.5rem' }}>{t.domainIcon}</span>
+                </div>
+              )}
               <AnimatePresence>
                 {isActive && (
                   <motion.div
@@ -314,25 +325,25 @@ const MediaRoom = () => {
 
   /* ── Track Data ── */
   const tracks = [
-    { id: 1, title: t('media.tracks.1.title'), domain: t('media.tracks.1.domain'), domainIcon: '☀️', desc: t('media.tracks.1.desc'), src: assetPath('/audio/01. Sunny Day (intro).mp3'), color: '#FF6F00', lyrics: null, cover: assetPath('/assets/soe-logo.png') },
+    { id: 1,  title: t('media.tracks.1.title'),  domain: t('media.tracks.1.domain'),  domainIcon: '☀️', desc: t('media.tracks.1.desc'),  src: assetPath('/audio/01. Sunny Day (intro).mp3'),     color: '#FF6F00', lyrics: null,  cover: assetPath('/assets/soe-logo.jpg') },
     { id: 2, title: t('media.tracks.2.title'), domain: t('media.tracks.2.domain'), domainIcon: '📅', desc: t('media.tracks.2.desc'), src: assetPath('/audio/02. Days of the Week.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/ELIAS.jpg'), lyrics: `(Verse)\nSeven days of a week I'll sing my song.\nCreation speaks to me all day long.\nHow I enjoy looking at those big white fluffy clouds.\nIn the daytime at night, I always look forward\nto the bright stars sparkling in the sky.\n\n(Chorus)\nSunday, Monday, Tuesday, Wednesday,\nThursday, Friday, Saturday.\nSunday, Monday, Tuesday, Wednesday,\nThursday, Friday, Saturday.` },
     { id: 3, title: t('media.tracks.3.title'), domain: t('media.tracks.3.domain'), domainIcon: '🗣️', desc: t('media.tracks.3.desc'), src: assetPath('/audio/03. Alphabet Song Remix.mp3'), color: '#FF6F00', cover: assetPath('/assets/characters/KENJI.jpg'), lyrics: `(Verse)\nA B C D E F G H I J K L M N O P\nQ R S T U V W X Y and Z.\nNow I know my ABC.\nNext time, won't you sing with me?\n\n(Remix / Breakdown)\nNow I know my ABCs remix.\nA A A B B B... C C C... D...\nE E F F... G G... H H I I I...\nJ J... K K K... L L M M...\nN O O O... P P P... Q...\nR S S T T T... U V W X Y Z` },
-    { id: 4, title: t('media.tracks.4.title'), domain: t('media.tracks.4.domain'), domainIcon: '🎨', desc: t('media.tracks.4.desc'), src: assetPath('/audio/04. Horses Interlude.mp3'), color: '#9C27B0', cover: assetPath('/assets/characters/AMARA.jpg'), lyrics: `(Spoken / Dialogue)\nHorses. Horses.\nThat's not a horse. That's a donkey.\nHorses. Horses.\nWait a minute. That's not a horse. That's a pig.\nHorses. Horses.\nGuys, did someone let the dogs out? That's a sheep.\nThat's not a horse.\n\nOh, can someone please get that cat out of here?\nWe're looking for a horse.\nAn elephant is certainly not a horse.\nLove those chickens, but I still need a horse.\nMonkeys. We need a horse.\nHorses. Now that's a horse.` },
+    { id: 4,  title: t('media.tracks.4.title'),  domain: t('media.tracks.4.domain'),  domainIcon: '🎨', desc: t('media.tracks.4.desc'),  src: assetPath('/audio/04. Horses Interlude.mp3'),      color: '#9C27B0', cover: assetPath('/assets/track-art/Donkey.jpg'),              lyrics: `(Spoken / Dialogue)\nHorses. Horses.\nThat's not a horse. That's a donkey.\nHorses. Horses.\nWait a minute. That's not a horse. That's a pig.\nHorses. Horses.\nGuys, did someone let the dogs out? That's a sheep.\nThat's not a horse.\n\nOh, can someone please get that cat out of here?\nWe're looking for a horse.\nAn elephant is certainly not a horse.\nLove those chickens, but I still need a horse.\nMonkeys. We need a horse.\nHorses. Now that's a horse.` },
     { id: 5, title: t('media.tracks.5.title'), domain: t('media.tracks.5.domain'), domainIcon: '🇫🇷', desc: t('media.tracks.5.desc'), src: assetPath('/audio/05. Le Cheval.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/RONAN.jpg'), lyrics: `(Verse — Sung in French)\nDeux accrets le cheval, fort et puissant\nDeux accrets le cheval, fort et puissant\nDeux accrets le cheval, fort et puissant\n\nOh, I can almost see the horses now grazing,\nEating up grass and apples, which they love so much.\nThe horse has strength and power,\nable to see almost all the way around its body.\nAfraid of nothing in the time of war,\nThe horse walks, trots, canter, and gallops.\nWhat an amazing creation.` },
-    { id: 6, title: t('media.tracks.6.title'), domain: t('media.tracks.6.domain'), domainIcon: '🤸', desc: t('media.tracks.6.desc'), src: assetPath('/audio/06. Lets Stretch.mp3'), color: '#4CAF50', cover: assetPath('/assets/characters/FELIX.jpg'), lyrics: `(Breathing Exercise)\\nBreathe in through your nose.\\nBreathe out through your mouth.\\n(Repeat)\\n\\n(Stretching Movements)\\nLet's stretch.\\nBring your arms up. Reach to the sky.\\nStretch real high.\\nBring your arms down.\\nDon't bend your knees.\\nTouch your toes.\\n(Repeat)` },
-    { id: 7, title: t('media.tracks.7.title'), domain: t('media.tracks.7.domain'), domainIcon: '💪', desc: t('media.tracks.7.desc'), src: assetPath('/audio/07. Drill Time.mp3'), color: '#4CAF50', cover: assetPath('/assets/characters/VESTA.jpg'), lyrics: `(Intro)\\nOn your mark, get set, ready, go.\\nStay on the path. Always learning.\\n\\n(The March)\\nForward march.\\nLeft, left, left, right, left.\\nLeft, left, left, right, left.\\n\\n(Chant)\\nAll I know is all I know.\\nWisdom is more precious than gold.\\nSound off! 1, 2, 3, 4.\\n\\n(The Shake)\\nWe're so excited about learning, we want to shake. Woohoo!\\nShake, shake, shake your left arm.\\nShake, shake, shake your right arm.\\nShake, shake, shake your left leg.\\nShake, shake, shake your right leg.\\n\\n(Outro)\\nChildren, please remember\\nalways stay on the right path and keep on learning.` },
+    { id: 6,  title: t('media.tracks.6.title'),  domain: t('media.tracks.6.domain'),  domainIcon: '🤸', desc: t('media.tracks.6.desc'),  src: assetPath('/audio/06. Lets Stretch.mp3'),           color: '#4CAF50', cover: assetPath('/assets/track-art/Touch your toes.png'),      lyrics: `(Breathing Exercise)\\nBreathe in through your nose.\\nBreathe out through your mouth.\\n(Repeat)\\n\\n(Stretching Movements)\\nLet's stretch.\\nBring your arms up. Reach to the sky.\\nStretch real high.\\nBring your arms down.\\nDon't bend your knees.\\nTouch your toes.\\n(Repeat)` },
+    { id: 7,  title: t('media.tracks.7.title'),  domain: t('media.tracks.7.domain'),  domainIcon: '💪', desc: t('media.tracks.7.desc'),  src: assetPath('/audio/07. Drill Time.mp3'),              color: '#4CAF50', cover: assetPath('/assets/track-art/Drums.jpg'),               lyrics: `(Intro)\\nOn your mark, get set, ready, go.\\nStay on the path. Always learning.\\n\\n(The March)\\nForward march.\\nLeft, left, left, right, left.\\nLeft, left, left, right, left.\\n\\n(Chant)\\nAll I know is all I know.\\nWisdom is more precious than gold.\\nSound off! 1, 2, 3, 4.\\n\\n(The Shake)\\nWe're so excited about learning, we want to shake. Woohoo!\\nShake, shake, shake your left arm.\\nShake, shake, shake your right arm.\\nShake, shake, shake your left leg.\\nShake, shake, shake your right leg.\\n\\n(Outro)\\nChildren, please remember\\nalways stay on the right path and keep on learning.` },
     { id: 8, title: t('media.tracks.8.title'), domain: t('media.tracks.8.domain'), domainIcon: '🔢', desc: t('media.tracks.8.desc'), src: assetPath('/audio/08. Numbers.mp3'), color: '#FF6F00', cover: assetPath('/assets/characters/KWAME.jpg'), lyrics: `(Intro)\\nI like the numbers.\\nIt is so much fun to count.\\n\\n(Call and Response)\\nNow let's count to 10 while we clap.\\nOne clap. Follow me. One.\\nTwo claps. Follow me. One. Two.\\nThree claps. Follow me. One. Two. Three.\\n...\\nTen claps. Follow me.\\n1 2 3 4 5 6 7 8 9 10.\\n\\n(Outro)\\nHooray. You did it.\\nGive yourself a great big hand clap.` },
     { id: 9, title: t('media.tracks.9.title'), domain: t('media.tracks.9.domain'), domainIcon: '🔬', desc: t('media.tracks.9.desc'), src: assetPath('/audio/09. My Body.mp3'), color: '#9C27B0', cover: assetPath('/assets/characters/ATHENA.jpg'), lyrics: `(Verse 1: Face)\\nWhat's on your face?\\nEyes, nose, mouth, chin.\\nDon't forget about your forehead, cheeks, and two ears.\\n\\n(Verse 2: Upper Body)\\nMy body is strong.\\nNeck, shoulders, back, arms.\\nDon't forget about your hands and tip fingers.\\n\\n(Verse 3: Lower Body)\\nMy body is strong.\\nHip, thighs, knees, legs.\\nDon't forget about your ankles, feet, and ten toes.\\n\\n(Bridge)\\nWe are going to keep our body strong\\nby eating right and staying healthy.\\nConsuming living foods, stretching,\\nand keeping our hearts right.` },
-    { id: 10, title: t('media.tracks.10.title'), domain: t('media.tracks.10.domain'), domainIcon: '🤝', desc: t('media.tracks.10.desc'), src: assetPath('/audio/10. Manners.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/AIKO.png'), lyrics: `(Verse)\\nWhen you receive, say Thank You.\\nThen I'll say You're Welcome.\\nYes, Please.\\nExcuse Me.\\nNo, Thank You.\\nI'm Sorry.` },
+    { id: 10, title: t('media.tracks.10.title'), domain: t('media.tracks.10.domain'), domainIcon: '🤝', desc: t('media.tracks.10.desc'), src: assetPath('/audio/10. Manners.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/AIKO.jpg'), lyrics: `(Verse)\\nWhen you receive, say Thank You.\\nThen I'll say You're Welcome.\\nYes, Please.\\nExcuse Me.\\nNo, Thank You.\\nI'm Sorry.` },
     { id: 11, title: t('media.tracks.11.title'), domain: t('media.tracks.11.domain'), domainIcon: '⏰', desc: t('media.tracks.11.desc'), src: assetPath('/audio/11. Time.mp3'), color: '#FF6F00', cover: assetPath('/assets/characters/SELENE.jpg'), lyrics: `Do you know? Do you know? Do you know what time it is?\\nIs it 1:00, 2:00, 3:00, 4:00, 5:00, 6:00, 7:00, 8:00, 9:00, 10:00, 11:00, 12:00?\\nDo you know? Do you know? Do you know what time it is?\\nIs it 1:30, 2:30, 3:30, 4:30, 5:30, 6:30, 7:30, 8:30, 9:30, 10:30, 11:30, 12:30?\\nDo you know? Do you know? Do you know what time it is?\\nIs it in the morning when you just wake up?\\nIs it in the afternoon and you're eating some lunch?\\nIs it in the evening and you're getting ready for bed?\\nDo you know what time it is?\\nIs it 1:00? Is it 1:30?\\nIs it in the morning when you just wake up?\\nIs it in the afternoon and you're eating some lunch?\\nIs it in the evening and you're getting ready for bed?\\nDo you know? Do you know? Do you know what time it is?` },
     { id: 12, title: t('media.tracks.12.title'), domain: t('media.tracks.12.domain'), domainIcon: '🦋', desc: t('media.tracks.12.desc'), src: assetPath('/audio/12. Changes.mp3'), color: '#4CAF50', cover: assetPath('/assets/characters/NERISSA.jpg'), lyrics: `(Verse)\\nIt's sunny outside. Yesterday it rained.\\nOh! Somewhere it might snow tomorrow.\\nThat's the weather, it changes.\\nBut not love from above.\\nTrue love is unchanging, always the same.\\nYesteray, today, and forever.` },
     { id: 13, title: t('media.tracks.13.title'), domain: t('media.tracks.13.domain'), domainIcon: '💯', desc: t('media.tracks.13.desc'), src: assetPath('/audio/13. One hundred.mp3'), color: '#9C27B0', cover: assetPath('/assets/characters/OCTAVIA.jpg'), lyrics: null },
-    { id: 14, title: t('media.tracks.14.title'), domain: t('media.tracks.14.domain'), domainIcon: '🌊', desc: t('media.tracks.14.desc'), src: assetPath('/audio/14. The Ocean.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/EZRA.jpg'), lyrics: null },
+    { id: 14, title: t('media.tracks.14.title'), domain: t('media.tracks.14.domain'), domainIcon: '🌊', desc: t('media.tracks.14.desc'), src: assetPath('/audio/14. The Ocean.mp3'),              color: '#1E88E5', cover: assetPath('/assets/track-art/Wave.jpg'),                lyrics: null },
     { id: 15, title: t('media.tracks.15.title'), domain: t('media.tracks.15.domain'), domainIcon: '📖', desc: t('media.tracks.15.desc'), src: assetPath('/audio/15. Hard Words.mp3'), color: '#FF6F00', cover: assetPath('/assets/characters/RONAN.jpg'), lyrics: `(Intro)\\nSometimes you may hear a word that's hard to say,\\nbut don't worry. Slow down and say...\\n\\n(Word Drill)\\nBalloon. Hawaii. Oklahoma.\\nLouisiana. Octopus. Vegetables.\\nSpaghetti. Macaroni.\\nAlaska. Nevada. Colorado.` },
     { id: 16, title: t('media.tracks.16.title'), domain: t('media.tracks.16.domain'), domainIcon: '🔷', desc: t('media.tracks.16.desc'), src: assetPath('/audio/16. Shapes.mp3'), color: '#4CAF50', cover: assetPath('/assets/characters/SILAS.jpg'), lyrics: `(Chorus)\\nI see shapes all around me.\\nDo you see shapes all around you?\\n\\n(Verse)\\nThere goes a Circle.\\nThat's a Square. (Yes, four equal sides).\\nTriangle. Stars. Rectangle.\\nTrapezoids. Pentagons. Hexagon.\\nHeptagon. Octagon. Cube. Spheres.` },
     { id: 17, title: t('media.tracks.17.title'), domain: t('media.tracks.17.domain'), domainIcon: '🗓️', desc: t('media.tracks.17.desc'), src: assetPath('/audio/17. Months of the Year.mp3'), color: '#9C27B0', cover: assetPath('/assets/characters/ELIAS.jpg'), lyrics: `(Intro)\\nTime. Seconds, minutes, hours, days, weeks, months.\\nIt's time for the months of the year song.\\n\\n(Chorus)\\nJanuary, February, March,\\nApril, May, June,\\nJuly, August, September,\\nOctober, November, December.` },
     { id: 18, title: t('media.tracks.18.title'), domain: t('media.tracks.18.domain'), domainIcon: '🌧️', desc: t('media.tracks.18.desc'), src: assetPath('/audio/18. Rain.mp3'), color: '#1E88E5', cover: assetPath('/assets/characters/ATHENA.jpg'), lyrics: `(Chant)\\nWatching raindrops falling down,\\ncleaning the atmosphere.\\nWatching raindrops falling down,\\ncleaning the atmosphere.` },
-    { id: 19, title: t('media.tracks.19.title'), domain: t('media.tracks.19.domain'), domainIcon: '🌈', desc: t('media.tracks.19.desc'), src: assetPath('/audio/20. After the Storm (outro).mp3'), color: '#4CAF50', cover: assetPath('/assets/soe-logo.png'), lyrics: null },
+    { id: 19, title: t('media.tracks.19.title'), domain: t('media.tracks.19.domain'), domainIcon: '🌈', desc: t('media.tracks.19.desc'), src: assetPath('/audio/20. After the Storm (outro).mp3'), color: '#4CAF50', cover: assetPath('/assets/soe-logo.jpg'), lyrics: null },
   ];
 
   return (
@@ -370,6 +381,43 @@ const MediaRoom = () => {
         </div>
       </section>
 
+      {/* ── Le Cheval Video Section ── */}
+      <section className="section">
+        <div className="container">
+          <RevealSection className="text-center">
+            <div className="section-label">🎬 Music Video</div>
+            <h2 className="section-title">
+              Le <span className="text-gold">Cheval</span>
+            </h2>
+            <p className="section-subtitle" style={{ margin: '0 auto 2rem auto' }}>
+              A bilingual musical journey celebrating the majesty of the horse — sung in French and English.
+            </p>
+          </RevealSection>
+
+          <RevealSection>
+            <div className="video-feature glass-card">
+              <video
+                className="video-feature__player"
+                src={assetPath('/videos/Le Cheval Video.mp4')}
+                poster={assetPath('/assets/characters/RONAN.jpg')}
+                controls
+                preload="metadata"
+                playsInline
+                aria-label="Le Cheval music video"
+              />
+              <div className="video-feature__meta">
+                <span className="video-feature__badge" style={{ background: '#1E88E5' }}>🇫🇷 Bilingual</span>
+                <h3 className="video-feature__title">Le Cheval — Track 5</h3>
+                <p className="video-feature__desc">
+                  Ronan &amp; Nerissa guide learners through the world of horses with rich French vocabulary, 
+                  movement, and cross-cultural storytelling from the land of Lexiconia.
+                </p>
+              </div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
       {/* ── Coloring Book Section ── */}
       <section className="section glow-plum">
         <div className="container">
@@ -386,9 +434,12 @@ const MediaRoom = () => {
           <RevealSection>
             <div className="book-viewer glass-card">
               <div className="book-viewer__display">
-                <div className="book-viewer__page book-viewer__page--placeholder" aria-label={`Coloring book page ${bookIndex + 1}`}>
-                  <span>{bookIndex + 1}</span>
-                </div>
+                <img
+                  src={bookPages[bookIndex]}
+                  alt={`Coloring book page ${bookIndex + 1}`}
+                  className="book-viewer__page"
+                  style={{ width: '100%', display: 'block', borderRadius: 'var(--radius-md)' }}
+                />
               </div>
               <div className="book-viewer__controls">
                 <button
@@ -435,9 +486,12 @@ const MediaRoom = () => {
           <RevealSection>
             <div className="book-viewer glass-card">
               <div className="book-viewer__display">
-                <div className="book-viewer__page book-viewer__page--placeholder" aria-label={`SOE Storybook page ${soeBookIndex + 1}`}>
-                  <span>{soeBookIndex + 1}</span>
-                </div>
+                <img
+                  src={soeBookPages[soeBookIndex]}
+                  alt={`SOE Storybook page ${soeBookIndex + 1}`}
+                  className="book-viewer__page"
+                  style={{ width: '100%', display: 'block', borderRadius: 'var(--radius-md)' }}
+                />
               </div>
               <div className="book-viewer__controls">
                 <button
@@ -864,6 +918,57 @@ const MediaRoom = () => {
         }
 
 
+
+        /* ── Le Cheval Video Feature ── */
+        .video-feature {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 0;
+          overflow: hidden;
+        }
+
+        .video-feature__player {
+          width: 100%;
+          display: block;
+          max-height: 520px;
+          object-fit: cover;
+          background: #000;
+        }
+
+        .video-feature__meta {
+          padding: 1.75rem 2rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .video-feature__badge {
+          display: inline-block;
+          font-size: 0.7rem;
+          font-weight: 700;
+          color: #fff;
+          padding: 0.25rem 0.75rem;
+          border-radius: 999px;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          width: fit-content;
+        }
+
+        .video-feature__title {
+          font-family: var(--font-heading);
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: var(--color-text-primary);
+          margin: 0;
+        }
+
+        .video-feature__desc {
+          font-size: 0.9rem;
+          color: var(--color-text-secondary);
+          line-height: 1.7;
+          margin: 0;
+          max-width: 680px;
+        }
 
         /* ── Book Viewer ── */
         .book-viewer {

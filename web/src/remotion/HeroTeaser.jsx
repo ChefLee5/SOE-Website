@@ -13,7 +13,7 @@ import {
 const heroes = [
     { name: 'Seriphia', land: 'The Celestial', icon: '✨', color: '#9C27B0', img: '/assets/characters/ETERNAL LEARNING MOTHER.png' },
     { name: 'Kenji', land: 'Harmonia', icon: '🎵', color: '#d4a843', img: '/assets/characters/KENJI.jpg' },
-    { name: 'Aiko', land: 'Harmonia', icon: '🎵', color: '#d4a843', img: '/assets/characters/AIKO.png' },
+    { name: 'Aiko', land: 'Harmonia', icon: '🎵', color: '#d4a843', img: '/assets/characters/AIKO.jpg' },
     { name: 'Kwame', land: 'Numeria', icon: '🔢', color: '#7fb685', img: '/assets/characters/KWAME.jpg' },
     { name: 'Octavia', land: 'Numeria', icon: '🔢', color: '#7fb685', img: '/assets/characters/OCTAVIA.jpg' },
     { name: 'Felix', land: 'Vitalis', icon: '🤸', color: '#c4785a', img: '/assets/characters/FELIX.jpg' },
