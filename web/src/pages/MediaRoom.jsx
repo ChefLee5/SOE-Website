@@ -5,8 +5,9 @@ import { useTranslation } from 'react-i18next';
 import AudioVisualizer from '../components/AudioVisualizer';
 import { assetPath } from '../utils/assetPath';
 import { RevealSection } from '../hooks/useReveal';
+import { useAnimeReveal } from '../hooks/useAnimeReveal';
 
-/* ── Book Pages ── */
+/* ── Book Pages (Coloring) ── */
 const bookPages = [
   '/assets/coloring-book/Coloring book cover.png',
   '/assets/coloring-book/Coloring page 1.png',
@@ -18,12 +19,64 @@ const bookPages = [
   '/assets/coloring-book/Coloring page 7.png',
 ].map(assetPath);
 
-const soeBookPages = [
-  '/assets/soe-book/SOE_RQ_COVER.jpg',
-  ...Array.from({ length: 14 }, (_, i) => `/assets/soe-book/${i + 1}.png`),
-  '/assets/soe-book/Page 3.1.png',
-  '/assets/soe-book/Page 7.1.png',
-].map(assetPath);
+/* ── SOE Book Pages (real assets) ── */
+const soeBookPages = Array.from({ length: 14 }, (_, i) =>
+  assetPath(`/assets/pages/page-${String(i + 1).padStart(2, '0')}.webp`)
+);
+
+/* ── Behind the Quest Photo Gallery ── */
+const galleryShots = Array.from({ length: 11 }, (_, i) =>
+  assetPath(`/assets/media/shot-${String(i + 1).padStart(2, '0')}.webp`)
+);
+
+/* ── Gallery Grid Component ── */
+const GalleryGrid = ({ shots }) => {
+  const [lightbox, setLightbox] = useState(null);
+  const gridRef = useAnimeReveal({ selector: '.gallery-shot', staggerMs: 60, translateY: [20, 0], scale: [0.95, 1] });
+
+  return (
+    <>
+      <div className="gallery-grid" ref={gridRef}>
+        {shots.map((src, i) => (
+          <button
+            key={i}
+            className="gallery-shot"
+            onClick={() => setLightbox(i)}
+            aria-label={`View photo ${i + 1}`}
+          >
+            <img src={src} alt={`SOE scene ${i + 1}`} loading="lazy" />
+            <div className="gallery-shot__overlay">
+              <span className="gallery-shot__zoom">⊕</span>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {lightbox !== null && (
+        <div className="gallery-lightbox" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
+          <button className="gallery-lightbox__close" onClick={() => setLightbox(null)} aria-label="Close">✕</button>
+          <button
+            className="gallery-lightbox__nav gallery-lightbox__nav--prev"
+            onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + shots.length) % shots.length); }}
+            aria-label="Previous"
+          >‹</button>
+          <img
+            src={shots[lightbox]}
+            alt={`SOE scene ${lightbox + 1}`}
+            className="gallery-lightbox__img"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            className="gallery-lightbox__nav gallery-lightbox__nav--next"
+            onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % shots.length); }}
+            aria-label="Next"
+          >›</button>
+          <span className="gallery-lightbox__counter">{lightbox + 1} / {shots.length}</span>
+        </div>
+      )}
+    </>
+  );
+};
 
 /* ── Album Art Carousel ── */
 const AlbumCarousel = ({ tracks, currentTrack, onSelect }) => {
@@ -490,6 +543,23 @@ const MediaRoom = () => {
               </div>
             </div>
           </RevealSection>
+        </div>
+      </section>
+
+      {/* ── Behind the Quest — Photo Gallery ── */}
+      <section className="section glow-sage">
+        <div className="container">
+          <RevealSection className="text-center">
+            <div className="section-label">📸 Behind the Quest</div>
+            <h2 className="section-title">
+              A World <span className="text-sage">Brought to Life</span>
+            </h2>
+            <p className="section-subtitle" style={{ margin: '0 auto 2.5rem auto' }}>
+              Glimpses from the world of SOE — characters, scenes, and moments from the Seven Lands.
+            </p>
+          </RevealSection>
+
+          <GalleryGrid shots={galleryShots} />
         </div>
       </section>
 
@@ -1009,6 +1079,141 @@ const MediaRoom = () => {
           .video-grid {
             grid-template-columns: 1fr;
           }
+        }
+
+        /* ── Photo Gallery Grid ── */
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.75rem;
+        }
+
+        .gallery-shot {
+          position: relative;
+          aspect-ratio: 4/3;
+          overflow: hidden;
+          border-radius: var(--radius-md);
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          background: var(--color-surface);
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+
+        .gallery-shot img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.6s var(--ease-gentle);
+        }
+
+        .gallery-shot:hover img {
+          transform: scale(1.08);
+          animation: kenBurns 8s ease-in-out infinite alternate;
+        }
+
+        .gallery-shot__overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.35);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .gallery-shot:hover .gallery-shot__overlay {
+          opacity: 1;
+        }
+
+        .gallery-shot__zoom {
+          font-size: 2rem;
+          color: white;
+          text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        /* ── Lightbox ── */
+        .gallery-lightbox {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.92);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          cursor: pointer;
+        }
+
+        .gallery-lightbox__img {
+          max-width: 90vw;
+          max-height: 85vh;
+          object-fit: contain;
+          border-radius: var(--radius-md);
+          box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+          cursor: default;
+        }
+
+        .gallery-lightbox__close {
+          position: absolute;
+          top: 1.5rem;
+          right: 1.5rem;
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: white;
+          font-size: 1.5rem;
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+
+        .gallery-lightbox__close:hover { background: rgba(255,255,255,0.2); }
+
+        .gallery-lightbox__nav {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: white;
+          font-size: 2.5rem;
+          width: 3.5rem;
+          height: 5rem;
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+          line-height: 1;
+        }
+
+        .gallery-lightbox__nav:hover { background: rgba(255,255,255,0.2); }
+        .gallery-lightbox__nav--prev { left: 1.5rem; }
+        .gallery-lightbox__nav--next { right: 1.5rem; }
+
+        .gallery-lightbox__counter {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          color: rgba(255,255,255,0.7);
+          font-size: 0.9rem;
+          font-family: var(--font-heading);
+        }
+
+        @media (max-width: 900px) {
+          .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 600px) {
+          .gallery-grid { grid-template-columns: repeat(2, 1fr); }
         }
       `}</style>
     </div>

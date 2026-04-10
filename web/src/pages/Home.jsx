@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ParallaxHero from '../components/ParallaxHero';
 import { RevealSection } from '../hooks/useReveal';
+import { useAnimeReveal } from '../hooks/useAnimeReveal';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -141,6 +142,17 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ═══ SCENE STRIP 1 — World Break ═══ */}
+      <div className="scene-strip" aria-hidden="true">
+        <img
+          src={`${import.meta.env.BASE_URL}assets/backgrounds/soe-bg-1.webp`}
+          alt=""
+          className="scene-strip__img"
+          loading="lazy"
+        />
+        <div className="scene-strip__overlay" />
+      </div>
+
       {/* ═══ APPROACH ═══ */}
       <section className="section features-section glow-sage">
         <div className="container">
@@ -166,6 +178,18 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ═══ SCENE STRIP 2 — World Break ═══ */}
+      <div className="scene-strip" aria-hidden="true">
+        <img
+          src={`${import.meta.env.BASE_URL}assets/backgrounds/soe-bg-2.webp`}
+          alt=""
+          className="scene-strip__img"
+          style={{ animationDirection: 'reverse' }}
+          loading="lazy"
+        />
+        <div className="scene-strip__overlay" />
+      </div>
 
       {/* ═══ 5 DOMAINS ═══ */}
       <section className="section domains-section">
@@ -193,6 +217,59 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* ═══ BOOK FEATURE — Cover Reveal ═══ */}
+      <section className="section book-feature-section text-center">
+        <div className="container">
+          <RevealSection className="text-center">
+            <div className="section-label">📚 The Picture Dictionary</div>
+            <h2 className="section-title">
+              Every Word Has a <span className="text-gold">World Behind It</span>
+            </h2>
+            <p className="section-subtitle" style={{ margin: '0 auto 2.5rem auto' }}>
+              4,000+ words. 157 scenes. 7 lands. The SOE Rhythm Quest Picture Dictionary is the most immersive
+              vocabulary journey ever designed for young learners.
+            </p>
+          </RevealSection>
+
+          <RevealSection delay={0.2}>
+            <div className="book-feature-layout">
+              <div className="cover-tilt">
+                <div className="cover-tilt__inner">
+                  <img
+                    src={`${import.meta.env.BASE_URL}assets/cover/cover.webp`}
+                    alt="SOE Rhythm Quest Picture Dictionary cover"
+                    style={{ maxWidth: '320px' }}
+                  />
+                </div>
+              </div>
+
+              <div className="book-feature-copy">
+                <ul className="book-feature-list">
+                  <li>🎵 <strong>14 characters</strong>, each with a unique rhythm and learning style</li>
+                  <li>🌏 <strong>7 magical lands</strong> — from Harmonia to Celestia</li>
+                  <li>📝 <strong>157 immersive scenes</strong> with full vocabulary context</li>
+                  <li>🎯 <strong>5 core domains:</strong> Language, Numbers, Science, Music, Life Skills</li>
+                </ul>
+                <Link to="/join" className="btn btn-gold" style={{ marginTop: '1.5rem' }}>
+                  Reserve My Copy
+                </Link>
+              </div>
+            </div>
+          </RevealSection>
+        </div>
+      </section>
+
+      {/* ═══ SCENE STRIP 3 — World Break ═══ */}
+      <div className="scene-strip" aria-hidden="true">
+        <img
+          src={`${import.meta.env.BASE_URL}assets/backgrounds/soe-bg-3.webp`}
+          alt=""
+          className="scene-strip__img"
+          loading="lazy"
+        />
+        <div className="scene-strip__overlay" />
+      </div>
 
       {/* ═══ FINAL CTA ═══ */}
       <section className="section cta-section text-center">
@@ -570,6 +647,40 @@ const Home = () => {
           .hero__char-img { width: 90px; height: 135px; }
           .domains-grid   { grid-template-columns: 1fr; }
           .cta-card       { padding: 3rem 1.5rem; }
+          .book-feature-layout { flex-direction: column; align-items: center; }
+        }
+
+        /* ── Book Feature Section ── */
+        .book-feature-layout {
+          display: flex;
+          align-items: center;
+          gap: 4rem;
+          justify-content: center;
+          text-align: left;
+        }
+
+        .book-feature-copy {
+          max-width: 480px;
+        }
+
+        .book-feature-list {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.9rem;
+        }
+
+        .book-feature-list li {
+          font-size: 1.05rem;
+          color: var(--color-text-secondary);
+          line-height: 1.5;
+          padding-left: 0.25rem;
+        }
+
+        .book-feature-list strong {
+          color: var(--color-text-primary);
         }
       `}</style>
     </div>

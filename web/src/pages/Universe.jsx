@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ParallaxHero from '../components/ParallaxHero';
-import { assetPath } from '../utils/assetPath';
+import { useAnimeReveal } from '../hooks/useAnimeReveal';
 
 /* ── Reveal Hook ── */
 const useReveal = () => {
@@ -73,7 +73,8 @@ const Universe = () => {
       landColor: '#9678c4',
       duo: ['Elias', 'Selene'],
       chars: ['ELIAS', 'SELENE'],
-      groupShot: `${import.meta.env.BASE_URL}assets/duos/Celestia_Elias_Selene.jpg`,
+      groupShot: `${import.meta.env.BASE_URL}assets/duos/Celestia_Elias_Selene.webp`,
+      sceneBg: `${import.meta.env.BASE_URL}assets/scenes/seriphia-in-celestia.webp`,
       focus: t('universe.lands.Chronia.focus'),
       desc: t('universe.lands.Chronia.desc'),
     },
@@ -83,7 +84,8 @@ const Universe = () => {
       landColor: '#d4a843',
       duo: ['Ronan', 'Nerissa'],
       chars: ['RONAN', 'NERISSA'],
-      groupShot: `${import.meta.env.BASE_URL}assets/duos/Aquaria_Ronan_Nerissa.jpg`,
+      groupShot: `${import.meta.env.BASE_URL}assets/duos/Aquaria_Ronan_Nerissa.webp`,
+      sceneBg: `${import.meta.env.BASE_URL}assets/scenes/b-roll-boats.webp`,
       focus: t('universe.lands.Lexiconia.focus'),
       desc: t('universe.lands.Lexiconia.desc'),
     },
@@ -93,6 +95,7 @@ const Universe = () => {
       landColor: '#7fb685',
       duo: ['Silas', 'Vesta'],
       chars: ['SILAS', 'VESTA'],
+      sceneBg: `${import.meta.env.BASE_URL}assets/scenes/wildflower-path.webp`,
       focus: t('universe.lands.Geometria.focus'),
       desc: t('universe.lands.Geometria.desc'),
     },
@@ -102,7 +105,8 @@ const Universe = () => {
       landColor: '#5ba4c9',
       duo: ['Ezra', 'Athena'],
       chars: ['EZRA', 'ATHENA'],
-      groupShot: `${import.meta.env.BASE_URL}assets/duos/Luminosity_Athena_Ezra.jpg`,
+      groupShot: `${import.meta.env.BASE_URL}assets/duos/Luminosity_Athena_Ezra.webp`,
+      sceneBg: `${import.meta.env.BASE_URL}assets/scenes/b-roll-flowers.webp`,
       focus: t('universe.lands.Natura.focus'),
       desc: t('universe.lands.Natura.desc'),
     },
@@ -128,6 +132,9 @@ const Universe = () => {
 
   const [activeDuo, setActiveDuo] = useState(null);
   const duosGridRef = useRef(null);
+  const landTilesRef = useAnimeReveal({ selector: '.land-tile', staggerMs: 70 });
+  const duoCardsRef = useAnimeReveal({ selector: '.duo-card', staggerMs: 90, translateY: [30, 0] });
+  const spotlightRef = useAnimeReveal({ selector: '.duo-spotlight-card', staggerMs: 120, scale: [0.94, 1] });
 
   const scrollToLand = (landName) => {
     const index = heroDuos.findIndex(d => d.land === landName);
@@ -174,7 +181,7 @@ const Universe = () => {
             <div className="seriphia-block">
               <div className="seriphia-block__image">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/characters/SERIPHIA.jpg`}
+                  src={`${import.meta.env.BASE_URL}assets/characters/SERIPHIA_celestia.png`}
                   alt="Seriphia — the guardian of the Seven Lands"
                   className="seriphia-portrait"
                 />
@@ -206,7 +213,7 @@ const Universe = () => {
             <p className="section-subtitle" style={{ margin: '0 auto 2rem auto' }}>
               {t('universe.map_subtitle')}
             </p>
-            <div className="lands-map-grid">
+            <div className="lands-map-grid" ref={landTilesRef}>
               {[
                 { land: 'Harmonia',  icon: '🎵', color: '#d4a843', duo: 'Kenji & Aiko',      focus: 'Music & Rhythm' },
                 { land: 'Numeria',   icon: '🔢', color: '#7fb685', duo: 'Kwame & Octavia',   focus: 'Numbers & Counting' },
@@ -250,32 +257,31 @@ const Universe = () => {
             </p>
           </RevealSection>
 
-          <div className="duo-spotlight-grid">
+          <div className="duo-spotlight-grid" ref={spotlightRef}>
             {heroDuos.filter(d => d.groupShot).map((duo, i) => (
-              <RevealSection key={duo.land} delay={i * 0.15}>
-                <div
-                  className="duo-spotlight-card glass-card"
-                  style={{ '--spotlight-color': duo.landColor }}
-                >
-                  <div className="duo-spotlight-card__img-wrap">
-                    <img
-                      src={duo.groupShot}
-                      alt={`${duo.duo[0]} and ${duo.duo[1]} from ${duo.land}`}
-                      className="duo-spotlight-card__img"
-                    />
-                    <div className="duo-spotlight-card__overlay">
-                      <span className="duo-spotlight-card__land-icon">{duo.landIcon}</span>
-                      <span className="duo-spotlight-card__land" style={{ color: duo.landColor }}>{duo.land}</span>
-                    </div>
-                  </div>
-                  <div className="duo-spotlight-card__body">
-                    <h3 className="duo-spotlight-card__names" style={{ color: duo.landColor }}>
-                      {duo.duo[0]} &amp; {duo.duo[1]}
-                    </h3>
-                    <p className="duo-spotlight-card__focus">{duo.focus}</p>
+              <div
+                key={duo.land}
+                className="duo-spotlight-card glass-card anime-item"
+                style={{ '--spotlight-color': duo.landColor }}
+              >
+                <div className="duo-spotlight-card__img-wrap">
+                  <img
+                    src={duo.groupShot}
+                    alt={`${duo.duo[0]} and ${duo.duo[1]} from ${duo.land}`}
+                    className="duo-spotlight-card__img"
+                  />
+                  <div className="duo-spotlight-card__overlay">
+                    <span className="duo-spotlight-card__land-icon">{duo.landIcon}</span>
+                    <span className="duo-spotlight-card__land" style={{ color: duo.landColor }}>{duo.land}</span>
                   </div>
                 </div>
-              </RevealSection>
+                <div className="duo-spotlight-card__body">
+                  <h3 className="duo-spotlight-card__names" style={{ color: duo.landColor }}>
+                    {duo.duo[0]} &amp; {duo.duo[1]}
+                  </h3>
+                  <p className="duo-spotlight-card__focus">{duo.focus}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -294,48 +300,49 @@ const Universe = () => {
             </p>
           </RevealSection>
 
-          <div className="duos-grid" ref={duosGridRef}>
+          <div className="duos-grid" ref={(el) => { duosGridRef.current = el; duoCardsRef.current = el; }}>
             {heroDuos.map((duo, i) => (
-              <RevealSection key={duo.land} delay={i * 0.1}>
-                <div
-                  className={`duo-card glass-card ${activeDuo === i ? 'duo-card--active' : ''}`}
-                  onClick={() => setActiveDuo(activeDuo === i ? null : i)}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={activeDuo === i}
-                  onKeyDown={(e) => e.key === 'Enter' && setActiveDuo(activeDuo === i ? null : i)}
-                >
-                  <div className="duo-card__header">
-                    <span className="duo-card__land-icon">{duo.landIcon}</span>
-                    <div>
-                      <h3 style={{ color: duo.landColor }}>{duo.land}</h3>
-                      <span className="duo-card__focus">{duo.focus}</span>
-                    </div>
+              <div
+                key={duo.land}
+                className={`duo-card glass-card anime-item ${activeDuo === i ? 'duo-card--active' : ''}`}
+                onClick={() => setActiveDuo(activeDuo === i ? null : i)}
+                role="button"
+                tabIndex={0}
+                aria-expanded={activeDuo === i}
+                onKeyDown={(e) => e.key === 'Enter' && setActiveDuo(activeDuo === i ? null : i)}
+                style={duo.sceneBg ? { '--scene-bg': `url(${duo.sceneBg})` } : {}}
+              >
+                {duo.sceneBg && (
+                  <div className="duo-card__scene-bg" aria-hidden="true" />
+                )}
+                <div className="duo-card__header">
+                  <span className="duo-card__land-icon">{duo.landIcon}</span>
+                  <div>
+                    <h3 style={{ color: duo.landColor }}>{duo.land}</h3>
+                    <span className="duo-card__focus">{duo.focus}</span>
                   </div>
-
-                  <div className="duo-card__image-wrap">
-                    <div className="duo-card__char-pair">
-                      <img
-                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[0]}_crop.png`}
-                        alt={duo.duo[0]}
-                        className="duo-card__char-img"
-                        style={{ mixBlendMode: 'multiply' }}
-                      />
-                      <img
-                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[1]}_crop.png`}
-                        alt={duo.duo[1]}
-                        className="duo-card__char-img"
-                        style={{ mixBlendMode: 'multiply' }}
-                      />
-                    </div>
-                  </div>
-                  <p className="duo-card__names">{duo.duo.join(' & ')}</p>
-
-                  {activeDuo === i && (
-                    <p className="duo-card__desc animate-fade-in">{duo.desc}</p>
-                  )}
                 </div>
-              </RevealSection>
+
+                <div className="duo-card__image-wrap">
+                  <div className="duo-card__char-pair">
+                    <img
+                      src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[0]}_crop.png`}
+                      alt={duo.duo[0]}
+                      className="duo-card__char-img"
+                    />
+                    <img
+                      src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[1]}_crop.png`}
+                      alt={duo.duo[1]}
+                      className="duo-card__char-img"
+                    />
+                  </div>
+                </div>
+                <p className="duo-card__names">{duo.duo.join(' & ')}</p>
+
+                {activeDuo === i && (
+                  <p className="duo-card__desc animate-fade-in">{duo.desc}</p>
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -658,6 +665,37 @@ const Universe = () => {
           overflow: hidden;
         }
 
+        /* ── Scene backdrop on duo cards ── */
+        .duo-card {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .duo-card__scene-bg {
+          position: absolute;
+          inset: 0;
+          background-image: var(--scene-bg);
+          background-size: cover;
+          background-position: center;
+          opacity: 0.08;
+          transition: opacity 0.5s ease;
+          animation: kenBurns 14s ease-in-out infinite alternate;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .duo-card:hover .duo-card__scene-bg {
+          opacity: 0.15;
+        }
+
+        .duo-card__header,
+        .duo-card__image-wrap,
+        .duo-card__names,
+        .duo-card__desc {
+          position: relative;
+          z-index: 1;
+        }
+
         /* ── Character pair inside duo card ── */
         .duo-card__char-pair {
           display: flex;
@@ -665,7 +703,7 @@ const Universe = () => {
           height: 200px;
           border-radius: var(--radius-md);
           overflow: hidden;
-          background: #fff;
+          background: transparent;
         }
 
         .duo-card__char-img {

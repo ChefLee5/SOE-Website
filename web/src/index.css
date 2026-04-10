@@ -707,3 +707,75 @@ img {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-green);
 }
+
+/* ========================================
+   Anime.js Global Utilities
+   ======================================== */
+
+/* Ken Burns — slow cinematic zoom for scene/background images */
+@keyframes kenBurns {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.08) translate(-1.5%, -1%); }
+}
+
+/* Anime-item — invisible before JS animates in */
+.anime-item {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Scene strip — full-bleed Ken Burns photo strip */
+.scene-strip {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+}
+
+.scene-strip__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  animation: kenBurns 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.scene-strip__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--color-bg-cream) 0%,
+    transparent 20%,
+    transparent 80%,
+    var(--color-bg-cream) 100%
+  );
+  pointer-events: none;
+}
+
+/* Book cover 3D tilt card */
+.cover-tilt {
+  perspective: 1000px;
+  display: inline-block;
+}
+
+.cover-tilt__inner {
+  transition: transform 0.4s var(--ease-gentle);
+  will-change: transform;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+}
+
+.cover-tilt:hover .cover-tilt__inner {
+  transform: rotateY(-8deg) rotateX(4deg) scale(1.03);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.25);
+}
+
+.cover-tilt__inner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
