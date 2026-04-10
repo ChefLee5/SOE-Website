@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 /* ── Reveal Hook ── */
 const useReveal = () => {
@@ -78,6 +79,8 @@ const AnimatedStat = ({ value, suffix = '', label, color }) => {
 };
 
 const Mission = () => {
+    const { t } = useTranslation();
+    React.useEffect(() => { document.title = 'Our Mission — SOE Rhythm Quest'; }, []);
     return (
         <div className="mission-page">
             {/* ── Hero ── */}

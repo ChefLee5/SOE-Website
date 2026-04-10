@@ -85,13 +85,24 @@ const CharacterCard = ({ char, index, isExpanded, onToggle }) => {
                 aria-expanded={isExpanded}
             >
                 <div className="char-card__image-wrap">
-                    <div
-                        className="char-card__avatar"
-                        style={{ background: char.landColor }}
-                        aria-hidden="true"
-                    >
-                        {char.name[0]}
-                    </div>
+                    {char.name === 'Seriphia' ? (
+                        <div className="char-card__img-bg char-card__img-bg--scene">
+                            <img
+                                src={`${import.meta.env.BASE_URL}assets/characters/SERIPHIA_celestia.png`}
+                                alt={char.name}
+                                className="char-card__image char-card__image--scene"
+                            />
+                        </div>
+                    ) : (
+                        <div className="char-card__img-bg" style={{ background: '#fff' }}>
+                            <img
+                                src={`${import.meta.env.BASE_URL}assets/characters/${char.name.toUpperCase()}_crop.png`}
+                                alt={char.name}
+                                className="char-card__image"
+                                style={{ mixBlendMode: 'multiply' }}
+                            />
+                        </div>
+                    )}
                     <div className="char-card__land-badge" style={{ background: char.landColor }}>
                         {t(`heroes.lands.${char.land}`)}
                     </div>
@@ -255,7 +266,6 @@ const Characters = () => {
                 /* ── Card ── */
                 .char-card {
                     padding: 0;
-                    overflow: hidden;
                     cursor: pointer;
                     transition: transform 0.35s var(--ease-gentle), box-shadow 0.35s var(--ease-gentle);
                 }
@@ -301,28 +311,60 @@ const Characters = () => {
                     z-index: 1;
                 }
 
-                /* ── Avatar Placeholder (no image) ── */
-                .char-card__avatar {
+                /* ── Image Container ── */
+                .char-card__img-bg {
                     width: 100%;
                     min-height: 220px;
+                    background: #fff;
                     display: flex;
-                    align-items: center;
+                    align-items: flex-end;
                     justify-content: center;
-                    font-family: var(--font-heading);
-                    font-size: 5rem;
-                    font-weight: 700;
-                    color: rgba(255,255,255,0.85);
-                    letter-spacing: -0.02em;
-                    border-bottom: 4px solid rgba(255,255,255,0.3);
+                    overflow: hidden;
+                    border-bottom: 3px solid rgba(255,255,255,0.5);
+                }
+
+                .char-card__image {
+                    width: 100%;
+                    height: 220px;
+                    object-fit: contain;
+                    object-position: center bottom;
+                    display: block;
                     transition: transform 0.5s var(--ease-gentle);
                 }
 
-                .char-card--featured .char-card__avatar {
+                .char-card--featured .char-card__img-bg {
                     min-height: 400px;
-                    font-size: 8rem;
                 }
 
-                .char-card:hover .char-card__avatar {
+                .char-card--featured .char-card__image {
+                    height: 400px;
+                }
+
+                .char-card:hover .char-card__image {
+                    transform: scale(1.04);
+                }
+
+                /* ── Seriphia scene variant ── */
+                .char-card__img-bg--scene {
+                    background: linear-gradient(135deg, #1a1060 0%, #4a2080 50%, #c47020 100%);
+                }
+
+                .char-card__image--scene {
+                    width: 100%;
+                    height: 220px;
+                    object-fit: cover;
+                    object-position: 30% top;
+                    display: block;
+                    mix-blend-mode: normal;
+                    transition: transform 0.5s var(--ease-gentle);
+                }
+
+                .char-card--featured .char-card__image--scene {
+                    height: 400px;
+                    object-position: 30% top;
+                }
+
+                .char-card:hover .char-card__image--scene {
                     transform: scale(1.04);
                 }
 

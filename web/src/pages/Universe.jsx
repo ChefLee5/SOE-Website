@@ -36,6 +36,7 @@ const RevealSection = ({ children, className = '', delay = 0 }) => {
 
 const Universe = () => {
   const { t } = useTranslation();
+  React.useEffect(() => { document.title = 'The Universe — SOE Rhythm Quest'; }, []);
 
   /* ── Character Data ── */
   const heroDuos = [
@@ -145,7 +146,7 @@ const Universe = () => {
         <ParallaxHero variant="universe" />
         <div className="container">
           <div className="universe-hero__content animate-fade-up text-center" style={{ position: 'relative', zIndex: 2 }}>
-            {/* Local text scrim — gives breathing room above the Spline globe */}
+            {/* Local text scrim */}
             <div style={{
               position: 'absolute',
               inset: '-2rem -3rem',
@@ -205,38 +206,32 @@ const Universe = () => {
             <p className="section-subtitle" style={{ margin: '0 auto 2rem auto' }}>
               {t('universe.map_subtitle')}
             </p>
-            <div className="map-container">
-              <div className="map-glow-ring" />
-              <div className="map-float-wrapper">
-                <div className="map-image map-image--placeholder" aria-label="Seven Lands Map">🗺️</div>
-                {/* Animated land pins */}
-                {[
-                  { land: 'Harmonia', color: '#d4a843', top: '28%', left: '18%', delay: '0s' },
-                  { land: 'Numeria', color: '#7fb685', top: '22%', left: '42%', delay: '0.3s' },
-                  { land: 'Vitalis', color: '#c4785a', top: '35%', left: '65%', delay: '0.6s' },
-                  { land: 'Chronia', color: '#9678c4', top: '55%', left: '78%', delay: '0.9s' },
-                  { land: 'Lexiconia', color: '#d4a843', top: '65%', left: '55%', delay: '1.2s' },
-                  { land: 'Geometria', color: '#7fb685', top: '58%', left: '30%', delay: '1.5s' },
-                  { land: 'Natura', color: '#5ba4c9', top: '45%', left: '12%', delay: '1.8s' },
-                ].map((pin) => (
-                  <div
-                    key={pin.land}
-                    className="map-pin"
-                    style={{
-                      top: pin.top,
-                      left: pin.left,
-                      '--pin-color': pin.color,
-                      animationDelay: pin.delay,
-                      cursor: 'pointer'
-                    }}
-                    title={t('universe.map_pin_title', { land: pin.land })}
-                    onClick={() => scrollToLand(pin.land)}
-                  >
-                    <span className="map-pin__dot" />
-                    <span className="map-pin__pulse" />
-                  </div>
-                ))}
-              </div>
+            <div className="lands-map-grid">
+              {[
+                { land: 'Harmonia',  icon: '🎵', color: '#d4a843', duo: 'Kenji & Aiko',      focus: 'Music & Rhythm' },
+                { land: 'Numeria',   icon: '🔢', color: '#7fb685', duo: 'Kwame & Octavia',   focus: 'Numbers & Counting' },
+                { land: 'Vitalis',   icon: '🤸', color: '#c4785a', duo: 'Felix & Amara',     focus: 'Movement & Wellness' },
+                { land: 'Chronia',   icon: '⏰', color: '#9678c4', duo: 'Elias & Selene',    focus: 'Time & Seasons' },
+                { land: 'Lexiconia', icon: '📖', color: '#d4897a', duo: 'Ronan & Nerissa',   focus: 'Language & Stories' },
+                { land: 'Geometria', icon: '📐', color: '#5fb685', duo: 'Silas & Vesta',     focus: 'Shapes & Space' },
+                { land: 'Natura',    icon: '🌊', color: '#5ba4c9', duo: 'Ezra & Athena',     focus: 'Nature & Science' },
+              ].map((land) => (
+                <div
+                  key={land.land}
+                  className="land-tile"
+                  style={{ '--land-color': land.color }}
+                  onClick={() => scrollToLand(land.land)}
+                  role="button"
+                  tabIndex={0}
+                  title={`Explore ${land.land}`}
+                >
+                  <span className="land-tile__icon">{land.icon}</span>
+                  <h3 className="land-tile__name" style={{ color: land.color }}>{land.land}</h3>
+                  <p className="land-tile__duo">{land.duo}</p>
+                  <p className="land-tile__focus">{land.focus}</p>
+                  <div className="land-tile__glow" aria-hidden="true" />
+                </div>
+              ))}
             </div>
           </RevealSection>
         </div>
@@ -321,14 +316,16 @@ const Universe = () => {
                   <div className="duo-card__image-wrap">
                     <div className="duo-card__char-pair">
                       <img
-                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[0]}.jpg`}
+                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[0]}_crop.png`}
                         alt={duo.duo[0]}
                         className="duo-card__char-img"
+                        style={{ mixBlendMode: 'multiply' }}
                       />
                       <img
-                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[1]}.jpg`}
+                        src={`${import.meta.env.BASE_URL}assets/characters/${duo.chars[1]}_crop.png`}
                         alt={duo.duo[1]}
                         className="duo-card__char-img"
+                        style={{ mixBlendMode: 'multiply' }}
                       />
                     </div>
                   </div>
@@ -433,105 +430,93 @@ const Universe = () => {
           line-height: 1.8;
         }
 
-        /* ── Map ── */
-        .map-container {
-          max-width: 800px;
+        /* ── Lands Map Grid ── */
+        .lands-map-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+          max-width: 900px;
           margin: 0 auto;
+        }
+
+        .land-tile {
           position: relative;
-        }
-
-        .map-glow-ring {
-          position: absolute;
-          inset: -20px;
+          background: #fff;
+          border: 2px solid var(--land-color);
           border-radius: var(--radius-lg);
-          background: linear-gradient(135deg, rgba(76,175,80,0.15), rgba(30,136,229,0.15), rgba(156,39,176,0.15));
-          filter: blur(30px);
-          z-index: 0;
-          animation: map-glow-breathe 4s ease-in-out infinite;
+          padding: 1.5rem 1rem;
+          text-align: center;
+          cursor: pointer;
+          transition: transform 0.3s var(--ease-gentle), box-shadow 0.3s var(--ease-gentle);
+          overflow: hidden;
         }
 
-        @keyframes map-glow-breathe {
-          0%, 100% { opacity: 0.4; transform: scale(0.97); }
-          50% { opacity: 0.8; transform: scale(1.02); }
+        .land-tile:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 40px rgba(0,0,0,0.10), 0 0 0 1px var(--land-color);
         }
 
-        .map-float-wrapper {
+        .land-tile__glow {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: var(--land-color);
+          opacity: 0.06;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .land-tile:hover .land-tile__glow {
+          opacity: 0.12;
+        }
+
+        .land-tile__icon {
+          font-size: 2rem;
+          display: block;
+          margin-bottom: 0.5rem;
           position: relative;
           z-index: 1;
-          animation: map-float 6s ease-in-out infinite;
         }
 
-        @keyframes map-float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
+        .land-tile__name {
+          font-family: var(--font-heading);
+          font-size: 1rem;
+          font-weight: 700;
+          margin: 0 0 0.3rem;
+          position: relative;
+          z-index: 1;
         }
 
-        .map-image {
-          width: 100%;
-          border-radius: var(--radius-lg);
-          border: 1px solid var(--color-border-light);
-          box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 60px var(--color-sage-glow);
-          transition: transform 0.5s var(--ease-gentle), box-shadow 0.5s var(--ease-gentle);
+        .land-tile__duo {
+          font-size: 0.75rem;
+          color: var(--color-text-secondary);
+          font-weight: 600;
+          margin: 0 0 0.15rem;
+          position: relative;
+          z-index: 1;
         }
 
-        .map-float-wrapper:hover .map-image {
-          transform: scale(1.03) rotateX(2deg);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 80px var(--color-sage-glow);
+        .land-tile__focus {
+          font-size: 0.7rem;
+          color: var(--color-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.07em;
+          margin: 0;
+          position: relative;
+          z-index: 1;
         }
 
-        /* ── Map Pins ── */
-        .map-pin {
-          position: absolute;
-          z-index: 2;
-          transform: translate(-50%, -50%);
-          animation: map-pin-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-          padding: 10px; /* Expand hit area */
-        }
-        .map-pin:hover {
-          transform: translate(-50%, -50%) scale(1.4);
-        }
-
-        @media (max-width: 480px) {
-          .map-pin {
-            padding: 15px; /* Even larger for tiny screens */
+        @media (max-width: 768px) {
+          .lands-map-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
 
-        @keyframes map-pin-appear {
-          from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-          to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-
-        .map-pin__dot {
-          display: block;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: var(--pin-color);
-          border: 2px solid #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-          position: relative;
-          z-index: 1;
-        }
-
-        .map-pin__pulse {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: var(--pin-color);
-          opacity: 0;
-          animation: map-pin-radar 2.5s ease-out infinite;
-          animation-delay: inherit;
-        }
-
-        @keyframes map-pin-radar {
-          0% { width: 12px; height: 12px; opacity: 0.6; }
-          100% { width: 50px; height: 50px; opacity: 0; }
+        @media (max-width: 480px) {
+          .lands-map-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+          }
         }
 
         /* ── Duo Spotlight Grid ── */
@@ -680,6 +665,7 @@ const Universe = () => {
           height: 200px;
           border-radius: var(--radius-md);
           overflow: hidden;
+          background: #fff;
         }
 
         .duo-card__char-img {

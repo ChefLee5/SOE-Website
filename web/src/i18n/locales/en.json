@@ -533,6 +533,8 @@
         "next": "Next →",
         "pre_order_coloring": "Pre-Order the Coloring Book",
         "pre_order_book": "Pre-Order the Storybook",
+        "lyrics_btn": "Lyrics",
+        "no_lyrics": "No lyrics available for this track.",
         "tracks": {
             "1":  { "title": "Sunny Day (Intro)",        "domain": "Introduction",           "desc": "A gentle sunrise melody that welcomes learners to the world of SOE." },
             "2":  { "title": "Days of the Week",         "domain": "Time & Chronia",         "desc": "Elias & Selene sing the seven days, building temporal sequencing skills." },

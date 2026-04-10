@@ -10,13 +10,20 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [location]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   const toggleLanguage = () => {
     const langs = ['en', 'fr', 'es'];
@@ -30,9 +37,15 @@ const Navbar = () => {
     { to: '/universe',   label: t('navbar.universe') },
     { to: '/characters', label: t('navbar.heroes') },
     { to: '/science',    label: t('navbar.science') },
+    { to: '/mission',    label: t('navbar.mission') },
     { to: '/media',      label: t('navbar.media') },
-    { to: '/dictionary', label: 'Dictionary' },
+    { to: '/dictionary', label: '📖 Dictionary' },
   ];
+
+  const isActive = (to) =>
+    to === '/'
+      ? location.pathname === '/'
+      : location.pathname.startsWith(to);
 
   return (
     <nav
@@ -49,18 +62,35 @@ const Navbar = () => {
         </span>
       </Link>
 
-      {/* ── Center links ── */}
+      {/* ── Desktop center links ── */}
       <div className={`navbar__links ${menuOpen ? 'navbar__links--open' : ''}`}>
+        {/* Mobile-only header inside the drawer */}
+        <div className="navbar__drawer-header">
+          <span className="navbar__drawer-title">Menu</span>
+          <button
+            className="navbar__drawer-close"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
+
         {navLinks.map(({ to, label }) => (
           <Link
             key={to}
             to={to}
-            className={`navbar__link ${location.pathname === to ? 'navbar__link--active' : ''}`}
-            aria-current={location.pathname === to ? 'page' : undefined}
+            className={`navbar__link ${isActive(to) ? 'navbar__link--active' : ''}`}
+            aria-current={isActive(to) ? 'page' : undefined}
           >
             {label}
           </Link>
         ))}
+
+        {/* CTA inside mobile drawer */}
+        <Link to="/join" className="navbar__cta-btn navbar__cta-btn--mobile">
+          {t('navbar.join')}
+        </Link>
       </div>
 
       {/* ── Right controls ── */}
@@ -89,6 +119,15 @@ const Navbar = () => {
           <span />
         </button>
       </div>
+
+      {/* Mobile backdrop */}
+      {menuOpen && (
+        <div
+          className="navbar__backdrop"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       <style>{`
         /* ─────────────────────────────────────────
@@ -135,7 +174,7 @@ const Navbar = () => {
           justify-content: center;
           width: 36px;
           height: 36px;
-          background: #1a1a2e;
+          background: linear-gradient(135deg, var(--color-green), var(--color-blue));
           color: #fff;
           border-radius: 10px;
           font-size: 1.1rem;
@@ -181,12 +220,17 @@ const Navbar = () => {
           justify-content: center;
         }
 
+        /* Drawer header — mobile only */
+        .navbar__drawer-header {
+          display: none;
+        }
+
         .navbar__link {
           font-family: var(--font-display);
           font-weight: 600;
-          font-size: 0.9rem;
+          font-size: 0.88rem;
           color: #1a1a2e;
-          padding: 0.45rem 0.75rem;
+          padding: 0.45rem 0.7rem;
           border-radius: 8px;
           text-decoration: none;
           letter-spacing: -0.01em;
@@ -197,7 +241,7 @@ const Navbar = () => {
 
         .navbar__link:hover {
           color: #000;
-          background: rgba(0,0,0,0.06);
+          background: rgba(0,0,0,0.05);
         }
 
         .navbar__link--active {
@@ -209,11 +253,16 @@ const Navbar = () => {
           content: '';
           position: absolute;
           bottom: 3px;
-          left: 0.75rem;
-          right: 0.75rem;
-          height: 2px;
-          background: #1a1a2e;
+          left: 0.7rem;
+          right: 0.7rem;
+          height: 2.5px;
+          background: linear-gradient(90deg, var(--color-green), var(--color-blue));
           border-radius: 99px;
+        }
+
+        /* Hide mobile-only CTA on desktop */
+        .navbar__cta-btn--mobile {
+          display: none;
         }
 
         /* ── Right controls ── */
@@ -231,7 +280,7 @@ const Navbar = () => {
           letter-spacing: 0.06em;
           color: #1a1a2e;
           background: none;
-          border: 1.5px solid rgba(0,0,0,0.25);
+          border: 1.5px solid rgba(0,0,0,0.2);
           border-radius: 8px;
           padding: 0.38rem 0.65rem;
           cursor: pointer;
@@ -239,9 +288,9 @@ const Navbar = () => {
         }
 
         .navbar__lang:hover {
-          border-color: #1a1a2e;
-          color: #000;
-          background: rgba(0,0,0,0.06);
+          border-color: var(--color-green);
+          color: var(--color-green);
+          background: var(--color-green-soft);
         }
 
         .navbar__cta-btn {
@@ -250,18 +299,18 @@ const Navbar = () => {
           font-size: 0.88rem;
           letter-spacing: -0.01em;
           color: #fff;
-          background: #1a1a2e;
-          padding: 0.5rem 1.25rem;
+          background: linear-gradient(135deg, var(--color-green), var(--color-blue));
+          padding: 0.5rem 1.3rem;
           border-radius: 99px;
           text-decoration: none;
-          transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
           white-space: nowrap;
+          box-shadow: 0 2px 10px rgba(76,175,80,0.3);
         }
 
         .navbar__cta-btn:hover {
-          background: #2d2d50;
           transform: translateY(-1px);
-          box-shadow: 0 4px 16px rgba(26,26,46,0.25);
+          box-shadow: 0 6px 20px rgba(76,175,80,0.35);
         }
 
         /* ── Hamburger ── */
@@ -275,6 +324,8 @@ const Navbar = () => {
           padding: 0.4rem;
           border-radius: 8px;
           transition: background 0.2s;
+          z-index: 1001;
+          position: relative;
         }
 
         .navbar__hamburger:hover {
@@ -301,46 +352,115 @@ const Navbar = () => {
           transform: rotate(-45deg) translate(5px, -5px);
         }
 
+        /* ── Backdrop (mobile overlay) ── */
+        .navbar__backdrop {
+          display: none;
+        }
+
         /* ── Mobile ── */
         @media (max-width: 840px) {
           .navbar__links {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 78%;
-            max-width: 300px;
+            width: 80%;
+            max-width: 310px;
             height: 100vh;
             flex-direction: column;
             align-items: flex-start;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 3rem 2rem;
-            background: rgba(255,255,255,0.98);
-            backdrop-filter: blur(20px);
-            box-shadow: -6px 0 30px rgba(0,0,0,0.08);
+            justify-content: flex-start;
+            gap: 0.25rem;
+            padding: 0 1.5rem 2rem;
+            background: #fff;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.1);
             transition: right 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 999;
+            z-index: 1000;
+            overflow-y: auto;
           }
 
           .navbar__links--open {
             right: 0;
           }
 
-          .navbar__link {
-            font-size: 1.15rem;
+          /* Drawer header */
+          .navbar__drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             width: 100%;
+            padding: 1.5rem 0 1rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-border);
+          }
+
+          .navbar__drawer-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+          }
+
+          .navbar__drawer-close {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--color-text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+          }
+
+          .navbar__drawer-close:hover {
+            background: rgba(0,0,0,0.06);
+          }
+
+          .navbar__link {
+            font-size: 1.1rem;
+            width: 100%;
+            padding: 0.75rem 0.5rem;
+            border-radius: 10px;
+          }
+
+          /* Mobile CTA inside drawer */
+          .navbar__cta-btn--mobile {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.9rem;
+            font-size: 1rem;
           }
 
           .navbar__hamburger {
             display: flex;
           }
 
-          .navbar__cta-btn {
+          /* Hide desktop CTA + lang on mobile */
+          .navbar__cta-btn:not(.navbar__cta-btn--mobile) {
             display: none;
           }
 
           .navbar__lang {
             display: none;
+          }
+
+          /* Backdrop */
+          .navbar__backdrop {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 999;
+            animation: backdropFade 0.2s ease;
+          }
+
+          @keyframes backdropFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
           }
         }
 

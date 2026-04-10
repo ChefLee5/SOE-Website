@@ -1,39 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ResearchAssistant from '../components/ResearchAssistant';
 import { assetPath } from '../utils/assetPath';
-
-/* ── Reveal Hook ── */
-const useReveal = () => {
-    const ref = useRef(null);
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    el.classList.add('revealed');
-                    observer.unobserve(el);
-                }
-            },
-            { threshold: 0.15 }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-    return ref;
-};
-
-const RevealSection = ({ children, className = '', delay = 0 }) => {
-    const ref = useReveal();
-    return (
-        <div ref={ref} className={`reveal-block ${className}`} style={{ animationDelay: `${delay}s` }}>
-            {children}
-        </div>
-    );
-};
+import { RevealSection } from '../hooks/useReveal';
 
 const Science = () => {
+    const { t } = useTranslation();
+    useEffect(() => { document.title = 'Science of the Sound — SOE Rhythm Quest'; }, []);
     return (
         <div className="science-page">
             {/* ── Hero ── */}

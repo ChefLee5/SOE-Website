@@ -1,101 +1,122 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ParallaxHero from '../components/ParallaxHero';
-
-/* ── Intersection Observer Hook ── */
-const useReveal = () => {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('revealed');
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return ref;
-};
-
-const RevealSection = ({ children, className = '', delay = 0 }) => {
-  const ref = useReveal();
-  return (
-    <div ref={ref} className={`reveal-block ${className}`} style={{ animationDelay: `${delay}s` }}>
-      {children}
-    </div>
-  );
-};
+import { RevealSection } from '../hooks/useReveal';
 
 const Home = () => {
   const { t } = useTranslation();
 
-  /* ── Domain Data ── */
-  const domains = [
-    { icon: '🗣️', title: t('home.domains.language.title'), desc: t('home.domains.language.desc') },
-    { icon: '🧠', title: t('home.domains.cognitive.title'), desc: t('home.domains.cognitive.desc') },
-    { icon: '🤸', title: t('home.domains.physical.title'), desc: t('home.domains.physical.desc') },
-    { icon: '🔬', title: t('home.domains.science.title'), desc: t('home.domains.science.desc') },
-    { icon: '💛', title: t('home.domains.social_emotional.title'), desc: t('home.domains.social_emotional.desc') },
+  useEffect(() => {
+    document.title = 'SOE: Rhythm Quest — Designed for the Developing Brain';
+  }, []);
+
+  /* ── All 14 characters ── */
+  const allChars = [
+    { name: 'Kenji',   file: 'KENJI_crop.png',   color: '#FF6F00', note: '♪' },
+    { name: 'Amara',   file: 'AMARA_crop.png',   color: '#4CAF50', note: '♫' },
+    { name: 'Silas',   file: 'SILAS_crop.png',   color: '#7B1FA2', note: '♩' },
+    { name: 'Athena',  file: 'ATHENA_crop.png',  color: '#1E88E5', note: '♬' },
+    { name: 'Aiko',    file: 'AIKO_crop.png',    color: '#E91E8C', note: '♪' },
+    { name: 'Elias',   file: 'ELIAS_crop.png',   color: '#00ACC1', note: '♫' },
+    { name: 'Ezra',    file: 'EZRA_crop.png',    color: '#F4511E', note: '♩' },
+    { name: 'Felix',   file: 'FELIX_crop.png',   color: '#8BC34A', note: '♬' },
+    { name: 'Kwame',   file: 'KWAME_crop.png',   color: '#FFB300', note: '♪' },
+    { name: 'Nerissa', file: 'NERISSA_crop.png', color: '#26C6DA', note: '♫' },
+    { name: 'Octavia', file: 'OCTAVIA_crop.png', color: '#AB47BC', note: '♩' },
+    { name: 'Ronan',   file: 'RONAN_crop.png',   color: '#5C6BC0', note: '♬' },
+    { name: 'Selene',  file: 'SELENE_crop.png',  color: '#EC407A', note: '♪' },
+    { name: 'Vesta',   file: 'VESTA_crop.png',   color: '#26A69A', note: '♫' },
+  ];
+
+  /* Double the array so the infinite scroll looks seamless */
+  const marqueeChars = [...allChars, ...allChars];
+
+  const stats = [
+    { value: t('home.stat_1_val'), label: t('home.stat_1_lab'), color: 'var(--color-orange)' },
+    { value: t('home.stat_2_val'), label: t('home.stat_2_lab'), color: 'var(--color-green)' },
+    { value: t('home.stat_3_val'), label: t('home.stat_3_lab'), color: 'var(--color-purple)' },
   ];
 
   const features = [
-    {
-      icon: '🎯',
-      title: t('home.features.active.title'),
-      subtitle: t('home.features.active.subtitle'),
-      desc: t('home.features.active.desc'),
-    },
-    {
-      icon: '🧘',
-      title: t('home.features.neuro.title'),
-      subtitle: t('home.features.neuro.subtitle'),
-      desc: t('home.features.neuro.desc'),
-    },
-    {
-      icon: '🌍',
-      title: t('home.features.scalable.title'),
-      subtitle: t('home.features.scalable.subtitle'),
-      desc: t('home.features.scalable.desc'),
-    },
+    { icon: '🎯', title: t('home.features.active.title'),   subtitle: t('home.features.active.subtitle'),   desc: t('home.features.active.desc') },
+    { icon: '🧠', title: t('home.features.neuro.title'),    subtitle: t('home.features.neuro.subtitle'),    desc: t('home.features.neuro.desc') },
+    { icon: '🌍', title: t('home.features.scalable.title'), subtitle: t('home.features.scalable.subtitle'), desc: t('home.features.scalable.desc') },
   ];
+
+  const domains = [
+    { icon: '🗣️', title: t('home.domains.language.title'),        desc: t('home.domains.language.desc'),        color: '#4CAF50' },
+    { icon: '🧠', title: t('home.domains.cognitive.title'),        desc: t('home.domains.cognitive.desc'),        color: '#1E88E5' },
+    { icon: '🤸', title: t('home.domains.physical.title'),         desc: t('home.domains.physical.desc'),         color: '#FF6F00' },
+    { icon: '🔬', title: t('home.domains.science.title'),          desc: t('home.domains.science.desc'),          color: '#7B1FA2' },
+    { icon: '💛', title: t('home.domains.social_emotional.title'), desc: t('home.domains.social_emotional.desc'), color: '#FFB300' },
+  ];
+
+  const BASE = import.meta.env.BASE_URL;
+
   return (
     <div className="home-page">
+
       {/* ═══ HERO ═══ */}
-      <header className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
+      <header className="hero">
         <ParallaxHero variant="home" />
-        <div className="container hero__inner">
-          <div className="hero__content animate-fade-up">
-            <h1 className="hero__title">
-              {t('home.hero_title_1')}{' '}
-              <span className="text-gold">{t('home.hero_title_2')}</span>
-            </h1>
-            <p className="hero__subtitle">
-              {t('home.hero_subtitle')}
-            </p>
 
-            <div className="hero__actions">
-              <Link to="/join" className="btn btn-gold">{t('hero.join_button')}</Link>
-              <Link to="/universe" className="btn btn-outline">{t('navbar.universe')} →</Link>
+        {/* Text copy sits above the marquee */}
+        <div className="hero__copy-wrap">
+          <div className="container">
+            <div className="hero__content animate-fade-up">
+              <div className="hero__eyebrow">
+                <span className="hero__badge">✨ {t('home.hero_note')}</span>
+              </div>
+              <h1 className="hero__title">
+                {t('home.hero_title_1')}{' '}
+                <span className="hero__title-accent">{t('home.hero_title_2')}</span>
+              </h1>
+              <p className="hero__subtitle">{t('home.hero_subtitle')}</p>
+              <div className="hero__actions">
+                <Link to="/join"     className="btn btn-gold hero__btn-primary">{t('hero.join_button')}</Link>
+                <Link to="/universe" className="btn btn-outline">{t('navbar.universe')} →</Link>
+              </div>
             </div>
-
-            <p className="hero__note">
-              {t('home.hero_note')}
-            </p>
           </div>
+        </div>
 
+        {/* Full-width character marquee */}
+        <div className="hero__marquee-wrap" aria-hidden="true">
+          <div className="hero__marquee-track">
+            {marqueeChars.map((char, i) => (
+              <div
+                key={`${char.name}-${i}`}
+                className="hero__char"
+                style={{ '--char-color': char.color }}
+              >
+                <div className="hero__char-note">{char.note}</div>
+                <img
+                  src={`${BASE}assets/characters/${char.file}`}
+                  alt={char.name}
+                  className="hero__char-img"
+                  loading={i < 7 ? 'eager' : 'lazy'}
+                  draggable="false"
+                />
+                <div className="hero__char-label">{char.name}</div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="hero__scroll-hint" aria-hidden="true">
-          <span>↓</span>
+
+        {/* Bottom info strip */}
+        <div className="hero__info-strip">
+          <span>🎵 14 Characters</span>
+          <span className="hero__info-sep">·</span>
+          <span>🗺️ 7 Musical Lands</span>
+          <span className="hero__info-sep">·</span>
+          <span>📚 Ages 2–8</span>
         </div>
+
+        <div className="hero__scroll-hint" aria-hidden="true"><span>↓</span></div>
       </header>
 
+      {/* ═══ WHY SOE — Stats ═══ */}
       <section className="section why-section glow-plum">
         <div className="container">
           <RevealSection className="text-center">
@@ -104,43 +125,33 @@ const Home = () => {
               {t('home.why_title_1')}<br />
               <span className="accent-text">{t('home.why_title_2')}</span>
             </h2>
-            <div className="divider divider-center"></div>
-            <p className="section-subtitle">
-              {t('home.why_subtitle')}
-            </p>
+            <div className="divider divider-center" />
+            <p className="section-subtitle">{t('home.why_subtitle')}</p>
           </RevealSection>
-
-          <RevealSection>
+          <RevealSection delay={0.1}>
             <div className="why-stats">
-              <div className="why-stat glass-card">
-                <span className="why-stat__number text-gold">{t('home.stat_1_val')}</span>
-                <span className="why-stat__label">{t('home.stat_1_lab')}</span>
-              </div>
-              <div className="why-stat glass-card">
-                <span className="why-stat__number text-sage">{t('home.stat_2_val')}</span>
-                <span className="why-stat__label">{t('home.stat_2_lab')}</span>
-              </div>
-              <div className="why-stat glass-card">
-                <span className="why-stat__number text-plum">{t('home.stat_3_val')}</span>
-                <span className="why-stat__label">{t('home.stat_3_lab')}</span>
-              </div>
+              {stats.map((s) => (
+                <div key={s.label} className="why-stat glass-card glass-card--static">
+                  <span className="why-stat__number" style={{ color: s.color }}>{s.value}</span>
+                  <span className="why-stat__label">{s.label}</span>
+                </div>
+              ))}
             </div>
           </RevealSection>
         </div>
       </section>
 
+      {/* ═══ APPROACH ═══ */}
       <section className="section features-section glow-sage">
         <div className="container">
           <RevealSection className="text-center">
             <div className="section-label">{t('home.approach_label')}</div>
             <h2 className="section-title">
-              {t('home.approach_title_1')} <span className="text-sage">{t('home.approach_title_2')}</span>
+              {t('home.approach_title_1')}{' '}
+              <span className="text-sage">{t('home.approach_title_2')}</span>
             </h2>
-            <p className="section-subtitle">
-              {t('home.approach_subtitle')}
-            </p>
+            <p className="section-subtitle">{t('home.approach_subtitle')}</p>
           </RevealSection>
-
           <div className="features-grid">
             {features.map((f, i) => (
               <RevealSection key={f.title} delay={i * 0.15}>
@@ -156,23 +167,24 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ═══ 5 DOMAINS ═══ */}
       <section className="section domains-section">
         <div className="container">
           <RevealSection className="text-center">
             <div className="section-label">{t('home.curriculum_label')}</div>
             <h2 className="section-title">
-              {t('home.curriculum_title_1')} <span className="text-gold">{t('home.curriculum_title_2')}</span>
+              {t('home.curriculum_title_1')}{' '}
+              <span className="text-gold">{t('home.curriculum_title_2')}</span>
             </h2>
-            <p className="section-subtitle">
-              {t('home.curriculum_subtitle')}
-            </p>
+            <p className="section-subtitle">{t('home.curriculum_subtitle')}</p>
           </RevealSection>
-
           <div className="domains-grid">
             {domains.map((d, i) => (
               <RevealSection key={d.title} delay={i * 0.1}>
-                <div className="glass-card domain-card">
-                  <span className="domain-card__icon">{d.icon}</span>
+                <div className="glass-card domain-card" style={{ '--domain-color': d.color }}>
+                  <div className="domain-card__icon-wrap">
+                    <span className="domain-card__icon">{d.icon}</span>
+                  </div>
                   <h4 className="domain-card__title">{d.title}</h4>
                   <p className="domain-card__desc">{d.desc}</p>
                 </div>
@@ -186,54 +198,82 @@ const Home = () => {
       <section className="section cta-section text-center">
         <div className="container">
           <RevealSection>
-            <div className="cta-icon" aria-hidden="true">🔔</div>
-            <h2>{t('home.cta_title')}</h2>
-            <p className="section-subtitle" style={{ marginTop: '1rem' }}>
-              {t('home.cta_subtitle')}{' '}
-              <span style={{ color: 'var(--color-green)' }}>Be part of the solution.</span>
-            </p>
-            <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/media" className="btn btn-gold">
-                {t('home.explore_media')}
-              </Link>
-              <Link to="/join" className="btn btn-sage">
-                {t('hero.join_button')}
-              </Link>
+            <div className="cta-card">
+              <div className="cta-icon" aria-hidden="true">🔔</div>
+              <h2>{t('home.cta_title')}</h2>
+              <p className="section-subtitle" style={{ marginTop: '1rem' }}>
+                {t('home.cta_subtitle')}{' '}
+                <span style={{ color: 'var(--color-green)', fontWeight: 600 }}>Be part of the solution.</span>
+              </p>
+              <div className="cta-actions">
+                <Link to="/media" className="btn btn-gold">{t('home.explore_media')}</Link>
+                <Link to="/join"  className="btn btn-sage">{t('hero.join_button')}</Link>
+              </div>
             </div>
           </RevealSection>
         </div>
       </section>
 
       <style>{`
-        /* ── Hero ── */
+        /* ══════════════════════════════════════════
+           Home Page — Styles
+        ══════════════════════════════════════════ */
+
+        /* ── Hero layout ── */
         .hero {
           min-height: 100vh;
           display: flex;
-          align-items: center;
+          flex-direction: column;
+          justify-content: center;
           padding-top: 80px;
           position: relative;
           overflow: hidden;
+          gap: 0;
         }
 
-        .hero__inner {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 4rem;
+        /* Text block */
+        .hero__copy-wrap {
+          position: relative;
+          z-index: 1;
+          padding: 2.5rem 0 1.5rem;
+        }
+
+        .hero__content {
+          max-width: 680px;
+        }
+
+        .hero__eyebrow { margin-bottom: 1.25rem; }
+
+        .hero__badge {
+          display: inline-flex;
           align-items: center;
+          gap: 0.4rem;
+          background: var(--color-green-soft);
+          color: var(--color-green);
+          font-family: var(--font-heading);
+          font-weight: 600;
+          font-size: 0.82rem;
+          padding: 0.35rem 1rem;
+          border-radius: var(--radius-xl);
+          border: 1px solid rgba(76,175,80,0.2);
         }
 
         .hero__title {
-          font-size: clamp(2.2rem, 4.5vw, 3.4rem);
-          line-height: 1.15;
-          margin-bottom: 1.5rem;
+          font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+          line-height: 1.1;
+          margin-bottom: 1.25rem;
           font-weight: 700;
         }
 
+        .hero__title-accent {
+          color: var(--color-orange);
+        }
+
         .hero__subtitle {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           color: var(--color-text-secondary);
-          margin-bottom: 2.5rem;
-          max-width: 500px;
+          margin-bottom: 2rem;
+          max-width: 520px;
           line-height: 1.8;
         }
 
@@ -243,54 +283,141 @@ const Home = () => {
           flex-wrap: wrap;
         }
 
-        .hero__note {
-          margin-top: 1.5rem;
-          font-size: 0.8rem;
-          color: var(--color-text-muted);
-          letter-spacing: 0.05em;
+        .hero__btn-primary {
+          box-shadow: 0 6px 24px rgba(255,111,0,0.25);
         }
 
-        .hero__visual {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .hero__image-wrapper {
+        /* ── Character Marquee ── */
+        .hero__marquee-wrap {
           position: relative;
-          max-width: 520px;
+          z-index: 1;
           width: 100%;
+          overflow: hidden;
+          background: rgba(255,255,255,0.7);
+          backdrop-filter: blur(0px);
+          /* Fade edges */
+          mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 6%,
+            black 94%,
+            transparent 100%
+          );
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            black 6%,
+            black 94%,
+            transparent 100%
+          );
+          padding: 1rem 0 0;
         }
 
-        .hero__image {
-          width: 100%;
-          border-radius: var(--radius-lg);
-          box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.08),
-            0 0 80px var(--color-plum-glow);
-          border: 2px solid var(--color-border);
+        .hero__marquee-track {
+          display: flex;
+          gap: 0.75rem;
+          align-items: flex-end;
+          width: max-content;
+          animation: marqueeScroll 50s linear infinite;
+          padding-bottom: 0.5rem;
         }
 
-        .hero__image-glow {
-          position: absolute;
-          inset: -40px;
-          border-radius: var(--radius-lg);
-          background: radial-gradient(circle at center, var(--color-sage-glow) 0%, transparent 60%);
-          z-index: -1;
-          filter: blur(40px);
+        .hero__marquee-track:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes marqueeScroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+
+        /* Individual character item */
+        .hero__char {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.35rem;
+          flex-shrink: 0;
+          width: 160px;
+          cursor: default;
+          transition: transform 0.3s ease;
+        }
+
+        .hero__char:hover {
+          transform: scale(1.05) translateY(-8px);
+        }
+
+        .hero__char-note {
+          font-size: 1.2rem;
+          color: var(--char-color);
+          height: 1.5rem;
+          line-height: 1;
+          animation: noteFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes noteFloat {
+          0%, 100% { transform: translateY(0); opacity: 0.8; }
+          50%       { transform: translateY(-6px); opacity: 1; }
+        }
+
+        .hero__char-img {
+          width: 160px;
+          height: 260px;
+          object-fit: contain;
+          object-position: center bottom;
+          mix-blend-mode: multiply;
+          filter: drop-shadow(0 6px 16px rgba(0,0,0,0.12));
+          transition: filter 0.3s ease, transform 0.3s ease;
+          display: block;
+        }
+
+        .hero__char:hover .hero__char-img {
+          filter: drop-shadow(0 14px 32px rgba(0,0,0,0.20));
+        }
+
+        .hero__char-label {
+          font-family: var(--font-heading);
+          font-weight: 700;
+          font-size: 0.78rem;
+          color: var(--char-color);
+          letter-spacing: 0.04em;
+          padding: 0.2rem 0.7rem;
+          background: color-mix(in srgb, var(--char-color) 10%, transparent);
+          border-radius: var(--radius-xl);
+          border: 1px solid color-mix(in srgb, var(--char-color) 25%, transparent);
+        }
+
+        /* Info strip below marquee */
+        .hero__info-strip {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          padding: 1rem 0 2rem;
+          font-family: var(--font-heading);
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--color-text-muted);
+        }
+
+        .hero__info-sep {
+          opacity: 0.35;
         }
 
         .hero__scroll-hint {
           position: absolute;
-          bottom: 2rem;
+          bottom: 1.5rem;
           left: 50%;
           transform: translateX(-50%);
           font-size: 1.2rem;
           color: var(--color-text-muted);
           animation: gentleFloat 3s ease-in-out infinite;
+          z-index: 2;
         }
 
-        /* ── Why Stats ── */
+        /* ── Stats ── */
         .why-stats {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -309,6 +436,7 @@ const Home = () => {
           font-size: 3rem;
           font-weight: 700;
           margin-bottom: 0.5rem;
+          line-height: 1;
         }
 
         .why-stat__label {
@@ -317,7 +445,7 @@ const Home = () => {
           line-height: 1.5;
         }
 
-        /* ── Features ── */
+        /* ── Feature Cards ── */
         .features-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -337,82 +465,77 @@ const Home = () => {
         }
 
         .feature-card__title {
-          font-size: 1.3rem;
+          font-size: 1.25rem;
           margin-bottom: 0.3rem;
           color: var(--color-text-primary);
         }
 
         .feature-card__subtitle {
           display: block;
-          font-size: 0.8rem;
-          color: var(--color-sage);
+          font-size: 0.78rem;
+          color: var(--color-green);
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          margin-bottom: 1rem;
+          margin-bottom: 0.85rem;
         }
 
         .feature-card__desc {
-          font-size: 0.95rem;
+          font-size: 0.92rem;
           color: var(--color-text-secondary);
           line-height: 1.7;
-          max-width: 100%;
         }
 
         /* ── 5 Domains ── */
         .domains-grid {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
-          gap: 1.5rem;
+          gap: 1.25rem;
           margin-top: 3rem;
         }
 
         .domain-card {
           text-align: center;
-          padding: 2rem 1rem;
+          padding: 1.75rem 1rem;
+          border-top: 3px solid var(--domain-color, var(--color-green));
         }
 
-        .domain-card__icon {
-          font-size: 2.2rem;
-          display: block;
-          margin-bottom: 0.8rem;
+        .domain-card__icon-wrap {
+          width: 52px;
+          height: 52px;
+          border-radius: var(--radius-full);
+          background: color-mix(in srgb, var(--domain-color, var(--color-green)) 12%, transparent);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 0.85rem;
         }
+
+        .domain-card__icon { font-size: 1.6rem; display: block; }
 
         .domain-card__title {
-          font-size: 1rem;
+          font-size: 0.95rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
           color: var(--color-text-primary);
         }
 
         .domain-card__desc {
-          font-size: 0.82rem;
+          font-size: 0.8rem;
           color: var(--color-text-muted);
           line-height: 1.5;
-          max-width: 100%;
         }
 
-        /* ── Reveal Animation ── */
-        .reveal-block {
-          opacity: 0;
-          transform: translateY(25px);
-          transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
-        }
+        /* ── CTA ── */
+        .cta-section { padding-bottom: 4rem; }
 
-        .reveal-block.revealed {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        /* ── CTA Section ── */
-        .cta-section {
+        .cta-card {
           background: linear-gradient(135deg,
-            rgba(76, 175, 80, 0.05) 0%,
-            rgba(123, 31, 162, 0.06) 50%,
-            rgba(30, 136, 229, 0.04) 100%);
-          border-radius: var(--radius-lg);
-          margin: 0 1rem 2rem;
-          padding-top: 5rem;
-          padding-bottom: 5rem;
+            rgba(76,175,80,0.05) 0%,
+            rgba(123,31,162,0.05) 50%,
+            rgba(30,136,229,0.04) 100%);
+          border: 2px solid var(--color-border);
+          border-radius: var(--radius-xl);
+          padding: 5rem 3rem;
         }
 
         .cta-icon {
@@ -422,48 +545,31 @@ const Home = () => {
           animation: gentleFloat 4s ease-in-out infinite;
         }
 
+        .cta-actions {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-top: 2.5rem;
+        }
+
         /* ── Responsive ── */
-        @media (max-width: 968px) {
-          .hero__inner {
-            grid-template-columns: 1fr;
-            text-align: center;
-          }
-
-          .hero__subtitle {
-            margin-left: auto;
-            margin-right: auto;
-          }
-
-          .hero__actions {
-            justify-content: center;
-          }
-
-          .hero__image-wrapper {
-            max-width: 100%;
-          }
-
-          .why-stats {
-            grid-template-columns: 1fr;
-          }
-
-          .features-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .domains-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
+        @media (max-width: 768px) {
+          .hero__char { width: 120px; }
+          .hero__char-img { width: 120px; height: 180px; }
+          .hero__marquee-track { gap: 0.5rem; }
+          .why-stats    { grid-template-columns: 1fr; }
+          .features-grid  { grid-template-columns: 1fr; }
+          .domains-grid   { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 640px) {
-          .domains-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .hero__actions {
-            flex-direction: column;
-            align-items: center;
-          }
+          .hero__content  { text-align: center; }
+          .hero__actions  { justify-content: center; }
+          .hero__char { width: 90px; }
+          .hero__char-img { width: 90px; height: 135px; }
+          .domains-grid   { grid-template-columns: 1fr; }
+          .cta-card       { padding: 3rem 1.5rem; }
         }
       `}</style>
     </div>

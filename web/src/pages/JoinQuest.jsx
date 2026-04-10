@@ -1,38 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
-/* ── Reveal Hook ── */
-const useReveal = () => {
-    const ref = useRef(null);
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    el.classList.add('revealed');
-                    observer.unobserve(el);
-                }
-            },
-            { threshold: 0.15 }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-    return ref;
-};
-
-const RevealSection = ({ children, className = '', delay = 0 }) => {
-    const ref = useReveal();
-    return (
-        <div ref={ref} className={`reveal-block ${className}`} style={{ animationDelay: `${delay}s` }}>
-            {children}
-        </div>
-    );
-};
+import { RevealSection } from '../hooks/useReveal';
 
 const JoinQuest = () => {
     const { t } = useTranslation();
+    useEffect(() => { document.title = 'Join the Quest — SOE Rhythm Quest'; }, []);
     // Newsletter State
     const [newsletter, setNewsletter] = useState({ email: '', submitted: false });
     const [newsLoading, setNewsLoading] = useState(false);

@@ -70,11 +70,11 @@
             },
             "science": {
                 "title": "Science",
-                "desc": "Nature, anatomy and discovery through sensory exploration."
+                "desc": "Nature, anatomie et découverte par l'exploration sensorielle."
             },
             "social_emotional": {
                 "title": "Socio-Émotionnel",
-                "desc": "Manners, empathy and self-regulation through collaborative music."
+                "desc": "Savoir-vivre, empathie et autorégulation par la musique collaborative."
             }
         },
         "features": {
@@ -533,6 +533,8 @@
         "next": "Suivant →",
         "pre_order_coloring": "Pré-commander le Livre de Coloriage",
         "pre_order_book": "Pré-commander le Livre de Contes",
+        "lyrics_btn": "Paroles",
+        "no_lyrics": "Pas de paroles disponibles pour ce morceau.",
         "tracks": {
             "1":  { "title": "Jour Ensoleillé (Intro)",         "domain": "Introduction",               "desc": "Une douce mélodie de lever de soleil qui accueille les apprenants." },
             "2":  { "title": "Les Jours de la Semaine",         "domain": "Temps et Chronia",           "desc": "Elias et Selene chantent les sept jours, développant les compétences de séquençage." },

@@ -96,9 +96,6 @@ html {
 }
 
 body {
-  /* Transparent so the SplineBackground shows through on desktop.
-     On mobile / low-end where Spline is skipped, the radial gradients
-     below give a warm cream fallback. */
   background: transparent;
   color: var(--color-text-primary);
   font-family: var(--font-body);
@@ -107,14 +104,13 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
-  /* Prevent Spline runtime from hijacking page scroll (injects overflow:hidden) */
-  overflow-y: auto !important;
   /* Subtle radial depth — makes the page feel alive, not flat */
   background-image:
     radial-gradient(ellipse 80% 40% at 20% 0%, rgba(76, 175, 80, 0.04) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 80% 100%, rgba(123, 31, 162, 0.04) 0%, transparent 60%);
   background-attachment: fixed;
 }
+
 
 /* ── Typography ── */
 h1,
@@ -333,6 +329,12 @@ img {
   border-color: var(--color-green-soft);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   transform: translateY(-4px);
+}
+
+/* Static variant — no lift on hover (use on stat blocks, info panels) */
+.glass-card--static:hover {
+  transform: none;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
 }
 
 /* ── Colored Section Backgrounds ── */
@@ -566,21 +568,72 @@ img {
 }
 
 @keyframes atmosphereFloat1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(80px, 40px) scale(1.05); }
-  66% { transform: translate(-40px, 60px) scale(0.97); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(80px, 40px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-40px, 60px) scale(0.97);
+  }
 }
 
 @keyframes atmosphereFloat2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40% { transform: translate(-60px, -30px) scale(1.06); }
-  70% { transform: translate(40px, 20px) scale(0.96); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  40% {
+    transform: translate(-60px, -30px) scale(1.06);
+  }
+
+  70% {
+    transform: translate(40px, 20px) scale(0.96);
+  }
 }
 
-/* ── App wrapper: sit above SplineBackground (z:0) and its overlay (z:1) ── */
+/* ── App wrapper: sits above the canvas background layer ── */
 .app {
   position: relative;
   z-index: 2;
+}
+
+/* ── Page Hero Helper ── */
+/* Standardizes the top padding on every page hero so they
+   clear the fixed navbar consistently. */
+.page-hero {
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* ── Scroll Reveal ── */
+/* Used by the shared useReveal hook in src/hooks/useReveal.jsx.
+   Elements start invisible+shifted down, then .revealed fires the transition. */
+.reveal-block {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.65s var(--ease-gentle),
+    transform 0.65s var(--ease-gentle);
+}
+
+.reveal-block.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── Scroll To Top Button ── */

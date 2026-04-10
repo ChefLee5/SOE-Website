@@ -471,6 +471,8 @@
         "next": "Siguiente →",
         "pre_order_coloring": "Pre-ordenar el Libro para Colorear",
         "pre_order_book": "Pre-ordenar el Libro de Cuentos",
+        "lyrics_btn": "Letra",
+        "no_lyrics": "No hay letra disponible para esta pista.",
         "tracks": {
             "1":  { "title": "Día Soleado (Intro)",           "domain": "Introducción",              "desc": "Una suave melodía de amanecer que da la bienvenida al mundo de SOE." },
             "2":  { "title": "Días de la Semana",             "domain": "Tiempo y Chronia",          "desc": "Elias y Selene cantan los siete días, desarrollando habilidades de secuenciación temporal." },
